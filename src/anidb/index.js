@@ -8,8 +8,17 @@ import Login from "./users/login";
 import CurrentUser from "./users/current-user";
 import Profile from "./users/profile";
 import Register from "./users/register";
+import RecommendedLists from "./recommended-lists";
+import cardReducer from "./reducers/card-reducer";
+import searchReducer from "./reducers/search-reducer";
 
-const store = configureStore({reducer: {users: usersReducer}})
+const store = configureStore({
+                                 reducer: {
+                                     users: usersReducer,
+                                     card: cardReducer,
+                                     anisearch: searchReducer
+                                 }
+})
 
 function Anidb() {
     return(
@@ -29,7 +38,7 @@ function Anidb() {
                             </Routes>
                         </div>
                         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
-                            <h1>Popular Anime Here...</h1>
+                            <RecommendedLists/>
                         </div>
                     </div>
                 </BrowserRouter>
