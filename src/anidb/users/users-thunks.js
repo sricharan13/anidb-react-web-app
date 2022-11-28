@@ -5,17 +5,14 @@ export const findAllUsersThunk = createAsyncThunk(
     'findAllUsers',
     async () => await findAllUsers()
 )
-
 export const registerThunk = createAsyncThunk(
     'register',
     async (user) => await register(user)
 )
-
 export const logoutThunk = createAsyncThunk(
     'logout',
     async () => await logout()
 )
-
 export const loginThunk = createAsyncThunk(
     'login',
     async (user) => await login(user)

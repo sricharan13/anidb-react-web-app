@@ -12,7 +12,8 @@ const NavigationComponent = () => {
     ]
     if (currentUser) {
         screens.push('profile')
-    } else {
+    }
+    else {
         screens.push('login')
     }
 
