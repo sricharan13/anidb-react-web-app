@@ -11,6 +11,7 @@ import Register from "./users/register";
 import RecommendedLists from "./recommended-lists";
 import cardReducer from "./reducers/card-reducer";
 import searchReducer from "./reducers/search-reducer";
+import SearchComponent from "./home/search";
 
 const store = configureStore({
                                  reducer: {
@@ -32,6 +33,7 @@ function Anidb() {
                         <div className="col-10 col-md-10 col-lg-7 col-xl-6">
                             <Routes>
                                 <Route path="/" element={<HomeComponent/>}/>
+                                <Route path="/search" element={<SearchComponent/>}/>
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/register" element={<Register/>}/>
                                 <Route path="/profile" element={<Profile/>}/>

@@ -10,7 +10,7 @@ const HomeComponent = () => {
         <>
             <div className="row">
                 {/*Search*/}
-                <Search/>
+                {/*<Search/>*/}
 
                 {/*Carousel*/}
                 <Carousel className="mt-2">

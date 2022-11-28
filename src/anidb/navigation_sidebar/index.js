@@ -9,7 +9,7 @@ const NavigationComponent = () => {
 
     const screens = [
         'users',
-        'industry',
+        'search',
     ]
     if (currentUser) {
         screens.push('profile')
@@ -29,7 +29,7 @@ const NavigationComponent = () => {
             {
                 screens.map((screen) =>
                     <Link to={`/${screen}`}
-                          className={`list-group-item text-center ${parts[1] === screen?'active': ''} ${screen === 'login' && "btn btn-success"}`}>
+                          className={`list-group-item text-center ${parts[1] === screen?'active': ''}`}>
                         <span className="text-capitalize">{screen}</span>
                     </Link>
                 )
