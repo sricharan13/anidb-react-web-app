@@ -18,7 +18,7 @@ const Login = () => {
     }
     return(
         <>
-            <h1>Login</h1>
+            <h3 className="text-center">Login</h3>
             {
                 error &&
                 <div className="alert alert-danger">
@@ -32,10 +32,7 @@ const Login = () => {
                 <span>Don't have an account? </span>
                 <Link to="/register"><span>Register Now</span></Link>
             </div>
-            {
-                currentUser &&
-                navigate("/profile")
-            }
+
         </>
     )
 }

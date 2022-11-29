@@ -8,8 +8,7 @@ const NavigationComponent = () => {
     const parts = pathname.split('/')
 
     const screens = [
-        'users',
-        'industry',
+        'users'
     ]
     if (currentUser) {
         screens.push('profile')
@@ -23,13 +22,13 @@ const NavigationComponent = () => {
             <div className={'list-group-item text-center fw-bold'}>
                 <span className="fw-bold">ANIDB</span>
             </div>
-            <Link to="/" className={`list-group-item text-center ${parts[1] === ''?'active': ''}`}>
+            <Link to="/" key={'home'} className={`list-group-item text-center ${parts[1] === ''?'active': ''}`}>
                 Home
             </Link>
             {
                 screens.map((screen) =>
-                    <Link to={`/${screen}`}
-                          className={`list-group-item text-center ${parts[1] === screen?'active': ''} ${screen === 'login' && "btn btn-success"}`}>
+                    <Link to={`/${screen}`} key={screen}
+                          className={`list-group-item text-center ${parts[1] === screen?'active': ''}`}>
                         <span className="text-capitalize">{screen}</span>
                     </Link>
                 )

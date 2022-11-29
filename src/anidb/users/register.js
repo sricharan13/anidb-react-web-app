@@ -7,6 +7,9 @@ const Register = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [validatePassword, setValidatePassword] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
@@ -17,12 +20,12 @@ const Register = () => {
             return
         }
         setError(null)
-        const newUser = {username, password}
+        const newUser = {username, password, firstName, lastName, email}
         dispatch(registerThunk(newUser))
     }
     return(
         <>
-            <h1>Register</h1>
+            <h3 className="text-center">Register</h3>
             {
                 error &&
                 <div className="alert alert-danger">
@@ -32,15 +35,15 @@ const Register = () => {
             <input
                 className="form-control mb-2"
                 placeholder="Enter First Name"
-                onChange={(e) => setValidatePassword(e.target.value)}/>
+                onChange={(e) => setFirstName(e.target.value)}/>
             <input
                 className="form-control mb-2"
                 placeholder="Enter Last Name"
-                onChange={(e) => setValidatePassword(e.target.value)}/>
+                onChange={(e) => setLastName(e.target.value)}/>
             <input
                 className="form-control mb-2"
                 placeholder="Enter Email"
-                onChange={(e) => setValidatePassword(e.target.value)}/>
+                onChange={(e) => setEmail(e.target.value)}/>
             <input
                 className="form-control mb-2"
                 placeholder="Enter Username"
