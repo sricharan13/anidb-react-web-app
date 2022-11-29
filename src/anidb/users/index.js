@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findAllUsersThunk} from "./users-thunks";
+import {findAllUsersThunk} from "./users-thunk";
 
 const UserList = () => {
     // const [users, setUsers] = useState([])

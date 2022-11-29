@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {registerThunk} from "./users-thunks";
-import {useNavigate} from "react-router";
+import {registerThunk} from "./users-thunk";
+import {Navigate, useNavigate} from "react-router";
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -13,7 +13,6 @@ const Register = () => {
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const handleRegisterBtn = () => {
         if (password !== validatePassword) {
             setError('Passwords must match')
@@ -22,6 +21,9 @@ const Register = () => {
         setError(null)
         const newUser = {username, password, firstName, lastName, email}
         dispatch(registerThunk(newUser))
+    }
+    if (currentUser) {
+        return (<Navigate to={'/profile'}/>)
     }
     return(
         <>
@@ -61,9 +63,6 @@ const Register = () => {
                 className="btn btn-primary w-100">
                 Register
             </button>
-            {
-                currentUser && navigate("/profile")
-            }
         </>
     )
 }

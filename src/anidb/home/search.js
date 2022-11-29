@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findBySearchTermThunk} from "./search-thunks";
 
-const Search = () => {
+const SearchComponent = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const {anime, loading} = useSelector((state) => state.anisearch)
     const dispatch = useDispatch()
@@ -20,21 +20,28 @@ const Search = () => {
                 <button type="button" className="btn btn-outline-primary rounded-pill"
                         onClick={() => { dispatch(findBySearchTermThunk(searchTerm)) }}>Search</button>
             </div>
-            {
-                anime && anime.map((a) =>
-                                         <li key={a.id} className="list-group-item">
-                                             <i className="float-end bi bi-hand-thumbs-up"></i>
-                                             <i className="float-end bi bi-hand-thumbs-down me-2"></i>
-                                             {a.title}
-                                         </li>
-                       )
-            }
+            <div className="list-group mt-2">
+                {
+                    anime && anime.map((a) =>
+                                           <div key={a.id} className="list-group-item d-flex">
+                                               <img src={`${a.image}`} width={100} height={120}/>
+                                               <div className="ms-2">
+                                                   <strong>{a.title}</strong><br/>
+                                                   <span>Rating: {a.rating}</span><br/>
+                                                   <span>Released: {a.releaseDate}</span><br/>
+                                                   <span>Type: {a.type}</span>
+                                               </div>
+
+                                           </div>
+                          )
+                }
+            </div>
 
         </>
     )
 }
 
-export default Search;
+export default SearchComponent;
 
 // onClick={() => {
 //     dispatch(userLikesMovieThunk({

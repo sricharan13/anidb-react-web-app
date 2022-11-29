@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk, registerThunk} from "./users-thunks";
-import {useNavigate} from "react-router";
+import {loginThunk} from "./users-thunk";
+import {Navigate} from "react-router";
 import {Link} from "react-router-dom";
 
 const Login = () => {
@@ -9,12 +9,17 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
-    const navigate = useNavigate();
     const dispatch = useDispatch()
     const handleLoginBtn = () => {
-        setError(null)
-        const loginUser = {username, password}
-        dispatch(loginThunk(loginUser))
+        try {
+            dispatch(loginThunk({username, password}))
+        }
+        catch (e) {
+
+        }
+    }
+    if (currentUser) {
+        return (<Navigate to={'/profile'}/>)
     }
     return(
         <>
@@ -32,7 +37,6 @@ const Login = () => {
                 <span>Don't have an account? </span>
                 <Link to="/register"><span>Register Now</span></Link>
             </div>
-
         </>
     )
 }

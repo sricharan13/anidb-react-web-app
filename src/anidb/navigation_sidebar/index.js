@@ -8,7 +8,8 @@ const NavigationComponent = () => {
     const parts = pathname.split('/')
 
     const screens = [
-        'users'
+        'users',
+        'search',
     ]
     if (currentUser) {
         screens.push('profile')
