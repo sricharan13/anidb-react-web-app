@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findBySearchTermThunk} from "../home/search-thunks";
-// import {findMovieBySearchTerm} from "./omdb-service";
+import {findByAnimeIdThunk, findBySearchTermThunk} from "../home/search-thunks";
 
 const initialState = {
     anime: [],
+    details: {},
     loading: false
 }
 
@@ -13,6 +13,10 @@ const searchReducer = createSlice({
                                     extraReducers: {
                                         [findBySearchTermThunk.fulfilled]: (state, action) => {
                                             state.anime = action.payload
+                                        },
+                                        [findByAnimeIdThunk.fulfilled]: (state, action) => {
+                                            console.log("Payload " + action.payload)
+                                            state.details = action.payload
                                         }
                                     }
                                 })

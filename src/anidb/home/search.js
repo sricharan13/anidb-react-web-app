@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findBySearchTermThunk} from "./search-thunks";
+import {Link} from "react-router-dom";
 
 const SearchComponent = () => {
     const [searchTerm, setSearchTerm] = useState('')
@@ -18,21 +19,22 @@ const SearchComponent = () => {
                        value={searchTerm}/>
 
                 <button type="button" className="btn btn-outline-primary rounded-pill"
-                        onClick={() => { dispatch(findBySearchTermThunk(searchTerm)) }}>Search</button>
+                        onClick={() => {dispatch(findBySearchTermThunk(searchTerm)) }}>Search</button>
             </div>
             <div className="list-group mt-2">
                 {
                     anime && anime.map((a) =>
-                                           <div key={a.id} className="list-group-item d-flex">
-                                               <img src={`${a.image}`} width={100} height={120}/>
-                                               <div className="ms-2">
-                                                   <strong>{a.title}</strong><br/>
-                                                   <span>Rating: {a.rating}</span><br/>
-                                                   <span>Released: {a.releaseDate}</span><br/>
-                                                   <span>Type: {a.type}</span>
+                                           <Link to={`/anime/${a.id}`} className="text-decoration-none rounded">
+                                               <div className="list-group-item d-flex">
+                                                   <img src={`${a.image}`} width={100} height={120}/>
+                                                   <div className="ms-2">
+                                                       <strong>{a.title.english ? a.title.english: a.title.romaji}</strong><br/>
+                                                       <span>Rating: {a.rating}</span><br/>
+                                                       <span>Released: {a.releaseDate}</span><br/>
+                                                       <span>Type: {a.type}</span><br/>
+                                                   </div>
                                                </div>
-
-                                           </div>
+                                           </Link>
                           )
                 }
             </div>

@@ -12,6 +12,7 @@ import RecommendedLists from "./recommended-lists";
 import cardReducer from "./reducers/card-reducer";
 import searchReducer from "./reducers/search-reducer";
 import SearchComponent from "./home/search";
+import DetailsComponent from "./home/details-component";
 
 const store = configureStore({
                                  reducer: {
@@ -37,6 +38,7 @@ function Anidb() {
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/register" element={<Register/>}/>
                                 <Route path="/profile" element={<Profile/>}/>
+                                <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>
                         </div>
                         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">

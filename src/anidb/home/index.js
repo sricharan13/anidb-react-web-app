@@ -1,5 +1,5 @@
 import "./index.css";
-import Carousel from 'react-bootstrap/Carousel';
+import {Carousel, Card, Stack} from 'react-bootstrap';
 import {useDispatch} from "react-redux";
 import Search from "./search";
 
@@ -9,9 +9,6 @@ const HomeComponent = () => {
     return(
         <>
             <div className="row">
-                {/*Search*/}
-                {/*<Search/>*/}
-
                 {/*Carousel*/}
                 <Carousel className="mt-2">
                     {
@@ -28,8 +25,44 @@ const HomeComponent = () => {
                 </Carousel>
 
                 {/*Latest Anime*/}
-                <div>
-
+                <div className="mt-2">
+                    <Carousel style={{ background: "grey" }}>{images.map((review, index) => (
+                        <Carousel.Item>
+                            <Stack direction="horizontal" className="h-100 justify-content-center align-items-center"
+                                gap={3}>
+                                <Card style={{ width: "18rem" }}>
+                                    <Card.Body>
+                                        <Card.Img src="/images/space-x-starship.webp"/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>
+                                            Some quick example text to build on the card title and
+                                            make up the bulk of the card's content.
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                                <Card style={{width: "18rem"}}>
+                                    <Card.Body>
+                                        <Card.Img src="/images/one-piece-banner.jpeg"/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>
+                                            Some quick example text to build on the card title and
+                                            make up the bulk of the card's content.
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                                <Card style={{width: "18rem"}}>
+                                    <Card.Body>
+                                        <Card.Img src="/images/one-piece-banner.jpeg"/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>
+                                            Some quick example text to build on the card title and
+                                            make up the bulk of the card's content.
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Stack>
+                        </Carousel.Item>))}
+                    </Carousel>
                 </div>
 
                 {/*Anime News*/}
