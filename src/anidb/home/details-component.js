@@ -5,12 +5,13 @@ import {findByAnimeIdThunk} from "./search-thunks";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk} from "../reviews/reviews-thunks";
+import {responsive} from "../responsive";
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
     const {details} = useSelector((state) => state.anisearch)
     const {currentUser} = useSelector((state) => state.users)
-    console.log(currentUser)
+    // console.log(currentUser)
     const [review, setReview] = useState('')
     const dispatch = useDispatch()
     useEffect(() => {
@@ -25,24 +26,13 @@ const DetailsComponent = () => {
             }
         ))
     }
-
-    const responsive = {
-        superLargeDesktop: {
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
-        },
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
-        }
+    const handleAddFavorite = () => {
+        // dispatch(addFavoriteThunk(
+        //     {
+        //         animeId,
+        //         author: currentUser._id
+        //     }
+        // ))
     }
     return (
         // <pre> {JSON.stringify(details)} </pre>
@@ -61,7 +51,9 @@ const DetailsComponent = () => {
                                 {details.description.replaceAll(/( |<([^>]+)>)/ig, "")}
                             </div>
                             <div className="col-4 mb-2">
-                                <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded"/>
+                                <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
+                                <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
+                                        onClick={handleAddFavorite}>Add to Favorites</button>
                             </div>
                         </div>
                         <div className="mt-2 mb-2">
@@ -72,6 +64,7 @@ const DetailsComponent = () => {
                             <span className="fw-bold mb-2"> Type: </span> <span className="text-capitalize"> {details.type} </span> <br/>
                             <span className="fw-bold mb-2"> Number of Episodes: </span> <span> {details.totalEpisodes} </span> <br/>
                             <span className="fw-bold mb-2"> Episode Duration: </span> <span> {details.duration} min. per ep. </span> <br/>
+                            <span className="fw-bold mb-2"> Studio(s): </span> <span> {details.studios.toString()} </span> <br/>
                         </div>
 
                         <div className="mt-2 ">
