@@ -1,4 +1,4 @@
-import NavigationComponent from "./navigation_sidebar";
+import NavigationComponent from "./navigation-sidebar";
 import {configureStore} from "@reduxjs/toolkit";
 import {Provider} from "react-redux";
 import usersReducer from "./users/users-reducer";
@@ -9,15 +9,13 @@ import CurrentUser from "./users/current-user";
 import Profile from "./users/profile";
 import Register from "./users/register";
 import RecommendedLists from "./recommended-lists";
-import cardReducer from "./reducers/card-reducer";
-import searchReducer from "./reducers/search-reducer";
+import searchReducer from "./home/search-reducer";
 import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
 
 const store = configureStore({
                                  reducer: {
                                      users: usersReducer,
-                                     card: cardReducer,
                                      anisearch: searchReducer
                                  }
 })
@@ -25,8 +23,8 @@ const store = configureStore({
 function Anidb() {
     return(
         <Provider store={store}>
-            <CurrentUser>
-                <BrowserRouter>
+            <BrowserRouter>
+                <CurrentUser>
                     <div className="row mt-2 ms-2 me-2">
                         <div className="col-2 col-md-2 col-lg-1 col-xl-2">
                             <NavigationComponent/>
@@ -45,8 +43,8 @@ function Anidb() {
                             <RecommendedLists/>
                         </div>
                     </div>
-                </BrowserRouter>
-            </CurrentUser>
+                </CurrentUser>
+            </BrowserRouter>
         </Provider>
     );
 }

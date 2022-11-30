@@ -1,7 +1,5 @@
 import "./index.css";
 import {Carousel, Card, Stack} from 'react-bootstrap';
-import {useDispatch} from "react-redux";
-import Search from "./search";
 
 
 const HomeComponent = () => {

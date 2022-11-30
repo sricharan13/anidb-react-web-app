@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findBySearchTermThunk} from "./search-thunks";
+import {findByAnimeIdThunk, findBySearchTermThunk} from "./search-thunks";
 import {Link} from "react-router-dom";
 
 const SearchComponent = () => {
@@ -24,17 +24,17 @@ const SearchComponent = () => {
             <div className="list-group mt-2">
                 {
                     anime && anime.map((a) =>
-                                           <Link to={`/anime/${a.id}`} className="text-decoration-none rounded">
-                                               <div className="list-group-item d-flex">
-                                                   <img src={`${a.image}`} width={100} height={120}/>
-                                                   <div className="ms-2">
-                                                       <strong>{a.title.english ? a.title.english: a.title.romaji}</strong><br/>
-                                                       <span>Rating: {a.rating}</span><br/>
-                                                       <span>Released: {a.releaseDate}</span><br/>
-                                                       <span>Type: {a.type}</span><br/>
-                                                   </div>
-                                               </div>
-                                           </Link>
+                        <Link to={`/anime/${a.id}`} className="text-decoration-none rounded">
+                            <div className="list-group-item d-flex">
+                               <img src={`${a.image}`} width={100} height={120}/>
+                                    <div className="ms-2">
+                                        <strong>{a.title.english ? a.title.english: a.title.romaji}</strong><br/>
+                                        <span>Rating: {a.rating}</span><br/>
+                                        <span>Released: {a.releaseDate}</span><br/>
+                                        <span>Type: {a.type}</span><br/>
+                                    </div>
+                            </div>
+                        </Link>
                           )
                 }
             </div>
@@ -44,9 +44,3 @@ const SearchComponent = () => {
 }
 
 export default SearchComponent;
-
-// onClick={() => {
-//     dispatch(userLikesMovieThunk({
-//                                      uid: 111, mid: movie.imdbID
-//                                  }))
-// }}

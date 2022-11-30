@@ -10,9 +10,6 @@ export const findBySearchTerm = async (term) => {
 }
 
 export const findByAnimeId = async (animeId) => {
-    console.log(animeId)
     const response = await axios.get(`${INFO_URL}${animeId}`)
-    console.log(response)
-    // console.log(response.data)
     return response.data
 }

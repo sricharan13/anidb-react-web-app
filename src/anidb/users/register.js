@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {registerThunk} from "./users-thunk";
-import {Navigate, useNavigate} from "react-router";
+import {Navigate} from "react-router";
 
 const Register = () => {
     const [username, setUsername] = useState('')
