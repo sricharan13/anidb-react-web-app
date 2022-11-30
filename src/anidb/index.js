@@ -13,12 +13,14 @@ import cardReducer from "./reducers/card-reducer";
 import searchReducer from "./reducers/search-reducer";
 import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
+import reviewsReducer from "./reviews/reviews-reducer";
 
 const store = configureStore({
                                  reducer: {
                                      users: usersReducer,
                                      card: cardReducer,
-                                     anisearch: searchReducer
+                                     anisearch: searchReducer,
+                                     reviews: reviewsReducer
                                  }
 })
 

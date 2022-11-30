@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findBySearchTermThunk} from "./search-thunks";
+import {findByAnimeIdThunk, findBySearchTermThunk} from "./search-thunks";
 import {Link} from "react-router-dom";
 
 const SearchComponent = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    const {anime, loading} = useSelector((state) => state.anisearch)
+    const {anime} = useSelector((state) => state.anisearch)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findBySearchTermThunk(searchTerm))
@@ -24,7 +24,7 @@ const SearchComponent = () => {
             <div className="list-group mt-2">
                 {
                     anime && anime.map((a) =>
-                                           <Link to={`/anime/${a.id}`} className="text-decoration-none rounded">
+                                           <Link to={`/anime/${a.id}`} key={a.id} className="text-decoration-none rounded">
                                                <div className="list-group-item d-flex">
                                                    <img src={`${a.image}`} width={100} height={120}/>
                                                    <div className="ms-2">

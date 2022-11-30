@@ -3,8 +3,7 @@ import {findByAnimeIdThunk, findBySearchTermThunk} from "../home/search-thunks";
 
 const initialState = {
     anime: [],
-    details: {},
-    loading: false
+    details: null
 }
 
 const searchReducer = createSlice({
@@ -15,7 +14,6 @@ const searchReducer = createSlice({
                                             state.anime = action.payload
                                         },
                                         [findByAnimeIdThunk.fulfilled]: (state, action) => {
-                                            console.log("Payload " + action.payload)
                                             state.details = action.payload
                                         }
                                     }
