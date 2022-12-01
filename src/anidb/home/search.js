@@ -24,7 +24,7 @@ const SearchComponent = () => {
             <div className="list-group mt-2">
                 {
                     anime && anime.map((a) =>
-                        <Link to={`/anime/${a.id}`} className="text-decoration-none rounded">
+                        <Link to={`/anime/${a.id}`} className="text-decoration-none">
                             <div className="list-group-item d-flex">
                                <img src={`${a.image}`} width={100} height={120}/>
                                 <div className="ms-2">

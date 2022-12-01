@@ -19,10 +19,13 @@ const Profile = () => {
                     <Link to="/profile/account" className={`nav-link ${parts[2] === 'account'?'active': ''}`}>Account</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/profile/friends" className={`nav-link ${parts[2] === 'friends'?'active': ''}`}>Friends</Link>
+                    <Link to="/profile/people" className={`nav-link ${parts[2] === 'people'?'active': ''}`}>People</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/profile/favourites" className={`nav-link ${parts[2] === 'favourites'?'active': ''}`}>Favourites</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/profile/my-reviews" className={`nav-link ${parts[2] === 'my-reviews'?'active': ''}`}>My Reviews</Link>
                 </li>
             </ul>
             <div className="mt-2">

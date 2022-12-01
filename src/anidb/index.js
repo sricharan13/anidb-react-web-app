@@ -16,7 +16,8 @@ import reviewsReducer from "./reviews/reviews-reducer";
 import homeReducer from "./reducers/home-reducer";
 import Account from "./users/account";
 import Favourites from "./users/favourites";
-import Friends from "./users/friends";
+import People from "./users/people";
+import MyReviews from "./users/my-reviews";
 
 const store = configureStore({
                                  reducer: {
@@ -45,7 +46,8 @@ function Anidb() {
                                 <Route path="/profile" element={<Profile/>}>
                                     <Route path="account" element={<Account/>}/>
                                     <Route path="favourites" element={<Favourites/>}/>
-                                    <Route path="friends" element={<Friends/>}/>
+                                    <Route path="people" element={<People/>}/>
+                                    <Route path="my-reviews" element={<MyReviews/>}/>
                                 </Route>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>

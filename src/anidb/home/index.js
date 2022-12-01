@@ -42,7 +42,7 @@ const HomeComponent = () => {
 
             {/*Action Anime*/}
             <div className="mt-2">
-                <span className="display-6"> Trending Now </span>
+                <strong> Trending Now </strong>
                 <div className="mt-2">
                     <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                         {trending.map((t) => (

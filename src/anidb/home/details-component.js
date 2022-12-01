@@ -6,7 +6,7 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
-import Form from 'react-bootstrap/Form'
+import {Accordion} from "react-bootstrap";
 
 
 const DetailsComponent = () => {
@@ -15,17 +15,21 @@ const DetailsComponent = () => {
     const {currentUser} = useSelector((state) => state.users)
     // console.log(currentUser)
     const [review, setReview] = useState('')
+    const [rating, setRating] = useState(50)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findByAnimeIdThunk(animeId))
     }, [])
-    const handleReview= () => {
+    const handleReview = () => {
         dispatch(createReviewThunk(
             {
                 review,
                 author: currentUser._id
             }
         ))
+    }
+    const handleRating = () => {
+
     }
     const handleAddFavorite = () => {
         // dispatch(addFavoriteThunk(
@@ -41,11 +45,16 @@ const DetailsComponent = () => {
                 details &&
                 <div>
                     <div className="border-dark border-bottom">
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
                             <div className="text-center">
-                                <h6>Rate this Anime</h6>
-                                <input type="range" name="rating" className="form-range" min="0" max="100" step="1"/>
+                                <div className="d-flex">
+                                    <input type="range" name="rating" value={rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
+                                    <span className="ms-1"><strong>{rating}</strong></span>
+                                </div>
+                                <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleReview}>
+                                    Rate Anime
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -54,9 +63,9 @@ const DetailsComponent = () => {
                             <div> <span className="fw-bold mb-2"> Synopsis </span> </div>
                             {details.description.replaceAll(/( |<([^>]+)>)/ig, " ")}
                         </div>
-                        <div className="col-4 mb-2">
+                        <div className="col-4 mb-2 text-center">
                             <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end"/>
-                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4" onClick={handleAddFavorite}>
+                            <button type="button" className="btn btn-primary rounded-pill mt-2" onClick={handleAddFavorite}>
                                 Add to Favorites
                             </button>
                         </div>
@@ -71,43 +80,43 @@ const DetailsComponent = () => {
                         <span className="fw-bold mb-2"> Episode Duration: </span> <span> {details.duration} min. per ep. </span> <br/>
                         <span className="fw-bold mb-2"> Studio(s): </span> <span> {details.studios.toString()} </span> <br/>
                     </div>
-
-                    <div className="mt-2 ">
-                        <span className="display-6 border-light border-bottom"> Characters </span>
-                        <div className="mt-2">
-                            <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
-                                details.characters.map((character) => (
-                                    <div style={{width: "10rem"}} >
-                                        <div className={"text-center"}>
-                                            <img src={`${character.image}`} height={200} width={128}/>
-                                            <div>{character.name.full}</div>
-                                            <div>({character.role})</div>
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header><strong>Characters</strong></Accordion.Header>
+                            <Accordion.Body>
+                                <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
+                                    details.characters.map((character) => (
+                                        <div style={{width: "10rem"}} >
+                                            <div className={"text-center"}>
+                                                <img src={`${character.image}`} height={200} width={128}/>
+                                                <div>{character.name.full}</div>
+                                                <div>({character.role})</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </Carousel>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="1">
+                            <Accordion.Header><strong>Suggested Anime</strong></Accordion.Header>
+                            <Accordion.Body>
+                                <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
+                                    details.recommendations.map((recommendation) => (
+                                        <div style={{width: "10rem"}} >
+                                            <div className={"text-center"}>
+                                                <img src={`${recommendation.image}`} height={200} width={128}/>
+                                                <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
+                                                <div>Rating: {recommendation.rating}</div>
+                                            </div>
+                                        </div>
+                                    ))}
                             </Carousel>
-                        </div>
-                    </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
 
                     <div className="mt-2">
-                        <span className="display-6 border-light border-bottom"> Suggested Anime </span>
-                        <div className="mt-2">
-                            <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
-                                details.recommendations.map((recommendation) => (
-                                    <div style={{width: "10rem"}} >
-                                        <div className={"text-center"}>
-                                            <img src={`${recommendation.image}`} height={200} width={128}/>
-                                            <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
-                                            <div>Rating: {recommendation.rating}</div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </Carousel>
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <span className="display-6 border-light border-bottom"> Reviews </span>
+                        <strong> Reviews </strong>
                         <div className="form-group mt-2">
                         <textarea className="form-control" rows="3" placeholder="Post your review here..."
                                   onChange={(e) => setReview(e.target.value)}></textarea>
