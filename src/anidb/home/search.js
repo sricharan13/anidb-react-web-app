@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 const SearchComponent = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    const {anime, loading} = useSelector((state) => state.anisearch)
+    const {anime} = useSelector((state) => state.anisearch)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findBySearchTermThunk(searchTerm))

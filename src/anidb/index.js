@@ -12,11 +12,15 @@ import RecommendedLists from "./recommended-lists";
 import searchReducer from "./home/search-reducer";
 import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
+import reviewsReducer from "./reviews/reviews-reducer";
+import homeReducer from "./reducers/home-reducer";
 
 const store = configureStore({
                                  reducer: {
                                      users: usersReducer,
-                                     anisearch: searchReducer
+                                     anisearch: searchReducer,
+                                     reviews: reviewsReducer,
+                                     home: homeReducer
                                  }
 })
 

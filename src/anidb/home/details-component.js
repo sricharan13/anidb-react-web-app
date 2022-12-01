@@ -1,36 +1,42 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {findByAnimeIdThunk} from "./search-thunks";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
+import {createReviewThunk} from "../reviews/reviews-thunks";
+import {responsive} from "../responsive";
+
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
     const {details} = useSelector((state) => state.anisearch)
+    const {currentUser} = useSelector((state) => state.users)
+    // console.log(currentUser)
+    const [review, setReview] = useState('')
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findByAnimeIdThunk(animeId))
     }, [])
-    const responsive = {
-        superLargeDesktop: {
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
-        },
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
-        }
+    // console.log(details)
+    const handleReview= () => {
+        dispatch(createReviewThunk(
+            {
+                review,
+                author: currentUser._id
+            }
+        ))
+    }
+    const handleAddFavorite = () => {
+        // dispatch(addFavoriteThunk(
+        //     {
+        //         animeId,
+        //         author: currentUser._id
+        //     }
+        // ))
     }
     return (
+        // <pre> {JSON.stringify(details)} </pre>
         <>
             {
                 details &&
@@ -43,10 +49,12 @@ const DetailsComponent = () => {
                     <div className="row mt-2">
                         <div className="col-8">
                             <div> <span className="fw-bold mb-2"> Synopsis </span> </div>
-                            {details.description.replaceAll(/( |<([^>]+)>)/ig, "")}
+                            {details.description.replaceAll(/( |<([^>]+)>)/ig, "")}
                         </div>
                         <div className="col-4 mb-2">
-                            <img src={`${details.image}`} alt="Image cannot be rendered" width={200} height={275} className="rounded"/>
+                            <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
+                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
+                                    onClick={handleAddFavorite}>Add to Favorites</button>
                         </div>
                     </div>
                     <div className="mt-2 mb-2">
@@ -57,14 +65,15 @@ const DetailsComponent = () => {
                         <span className="fw-bold mb-2"> Type: </span> <span className="text-capitalize"> {details.type} </span> <br/>
                         <span className="fw-bold mb-2"> Number of Episodes: </span> <span> {details.totalEpisodes} </span> <br/>
                         <span className="fw-bold mb-2"> Episode Duration: </span> <span> {details.duration} min. per ep. </span> <br/>
+                        <span className="fw-bold mb-2"> Studio(s): </span> <span> {details.studios.toString()} </span> <br/>
                     </div>
 
                     <div className="mt-2 ">
-                        <span className="display-5 border-light border-bottom"> Characters </span>
+                        <span className="display-6 border-light border-bottom"> Characters </span>
                         <div className="mt-2">
                             <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
                                 details.characters.map((character) => (
-                                    <div>
+                                    <div style={{width: "15rem"}} >
                                         <div className={"text-center"}>
                                             <img src={`${character.image}`} height={200} width={128}/>
                                             <div>{character.name.full}</div>
@@ -76,11 +85,30 @@ const DetailsComponent = () => {
                         </div>
                     </div>
 
+                    <div className="mt-2 ">
+                        <span className="display-6 border-light border-bottom"> Suggested Anime </span>
+                        <div className="mt-2">
+                            <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
+                                details.recommendations.map((recommendation) => (
+                                    <div style={{width: "15rem"}} >
+                                        <div className={"text-center"}>
+                                            <img src={`${recommendation.image}`} height={200} width={128}/>
+                                            <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
+                                            <div>Rating: {recommendation.rating}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </div>
+                    </div>
+
                     <div className="mt-2">
-                        <span className="display-5 border-light border-bottom"> Reviews </span>
+                        <span className="display-6 border-light border-bottom"> Reviews </span>
                         <div className="form-group mt-2">
-                            <textarea className="form-control" rows="3" placeholder="Post your review here..."></textarea>
-                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end">Post</button>
+                        <textarea className="form-control" rows="3" placeholder="Post your review here..."
+                                  onChange={(e) => setReview(e.target.value)}></textarea>
+                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end"
+                                    onClick={handleReview}>Post</button>
                         </div>
                     </div>
                 </div>
