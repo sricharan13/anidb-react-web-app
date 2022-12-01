@@ -19,6 +19,7 @@ import Favourites from "./users/favourites";
 import People from "./users/people";
 import MyReviews from "./users/my-reviews";
 import UserList from "./users";
+import ProtectedRoute from "./users/protected-route";
 
 const store = configureStore({
                                  reducer: {
@@ -45,7 +46,7 @@ function Anidb() {
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/register" element={<Register/>}/>
                                 <Route path="/users" element={<UserList/>}/>
-                                <Route path="/profile" element={<Profile/>}>
+                                <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}>
                                     <Route path="account" element={<Account/>}/>
                                     <Route path="favourites" element={<Favourites/>}/>
                                     <Route path="people" element={<People/>}/>
