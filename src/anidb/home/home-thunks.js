@@ -1,5 +1,9 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {findRecentAnimeEpisodes, findTrendingAnime} from "./home-service";
+import {
+    findByAnimeGenre,
+    findRecentAnimeEpisodes,
+    findTrendingAnime
+} from "./home-service";
 
 export const findRecentAnimeEpisodesThunk = createAsyncThunk (
     'findRecentAnimeEpisodes',
@@ -9,4 +13,9 @@ export const findRecentAnimeEpisodesThunk = createAsyncThunk (
 export const findTrendingAnimeThunk = createAsyncThunk (
     'findTrendingAnime',
     () => findTrendingAnime()
+)
+
+export const findByAnimeGenreThunk = createAsyncThunk (
+    'findByAnimeGenre',
+    (genres) => findByAnimeGenre(genres)
 )

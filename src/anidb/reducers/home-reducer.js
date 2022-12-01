@@ -1,9 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findRecentAnimeEpisodesThunk, findTrendingAnimeThunk} from "../home/home-thunks";
+import {
+    findByAnimeGenreThunk,
+    findRecentAnimeEpisodesThunk,
+    findTrendingAnimeThunk
+} from "../home/home-thunks";
 
 const initialState = {
     recentEp: [],
-    trending: []
+    trending: [],
+    byGenre: []
 }
 
 const homeReducer = createSlice(
@@ -16,6 +21,9 @@ const homeReducer = createSlice(
             },
             [findTrendingAnimeThunk.fulfilled]: (state, action) => {
                 state.trending = action.payload
+            },
+            [findByAnimeGenreThunk.fulfilled]: (state, action) => {
+                state.byGenre = action.payload
             }
         }
     }

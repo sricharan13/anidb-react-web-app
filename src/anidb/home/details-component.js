@@ -21,8 +21,7 @@ const DetailsComponent = () => {
     const handleReview= () => {
         dispatch(createReviewThunk(
             {
-                review,
-                author: currentUser._id
+                review
             }
         ))
     }
@@ -89,7 +88,7 @@ const DetailsComponent = () => {
                             <div className="mt-2">
                                 <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
                                     details.recommendations.map((recommendation) => (
-                                        <div style={{width: "15rem"}} >
+                                        <div style={{width: "10rem"}} >
                                             <div className={"text-center"}>
                                                 <img src={`${recommendation.image}`} height={200} width={128}/>
                                                 <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
@@ -103,12 +102,16 @@ const DetailsComponent = () => {
 
                         <div className="mt-2">
                             <span className="display-6 border-light border-bottom"> Reviews </span>
-                            <div className="form-group mt-2">
-                        <textarea className="form-control" rows="3" placeholder="Post your review here..."
-                                  onChange={(e) => setReview(e.target.value)}></textarea>
-                                <button type="button" className="btn btn-primary rounded-pill mt-2 float-end"
-                                        onClick={handleReview}>Post</button>
-                            </div>
+                            {
+                                currentUser &&
+                                <div className="form-group mt-2">
+                                <textarea className="form-control" rows="3" placeholder="Post your review here..."
+                                          onChange={(e) => setReview(e.target.value)}></textarea>
+                                    <button type="button" className="btn btn-primary rounded-pill mt-2 float-end"
+                                            onClick={handleReview}>Post</button>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 }

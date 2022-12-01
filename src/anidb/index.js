@@ -15,6 +15,7 @@ import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
 import reviewsReducer from "./reviews/reviews-reducer";
 import homeReducer from "./reducers/home-reducer";
+import ProtectedRoute from "./users/protected-route";
 
 const store = configureStore({
                                  reducer: {
@@ -41,7 +42,11 @@ function Anidb() {
                                 <Route path="/search" element={<SearchComponent/>}/>
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/register" element={<Register/>}/>
-                                <Route path="/profile" element={<Profile/>}/>
+                                <Route path="/profile" element={
+                                    <ProtectedRoute>
+                                        <Profile/>
+                                    </ProtectedRoute>
+                                }/>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>
                         </div>
