@@ -4,24 +4,27 @@ import React, {useEffect, useState} from "react";
 import {findByAnimeIdThunk} from "./search-thunks";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
-import {createReviewThunk} from "../reviews/reviews-thunks";
+import {createReviewThunk, findReviewsByAnimeThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
     const {details} = useSelector((state) => state.anisearch)
     const {currentUser} = useSelector((state) => state.users)
+    const {reviews} = useSelector((state) => state.reviews)
     // console.log(currentUser)
     const [review, setReview] = useState('')
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findByAnimeIdThunk(animeId))
+        dispatch(findReviewsByAnimeThunk(animeId))
     }, [])
     // console.log(details)
     const handleReview= () => {
         dispatch(createReviewThunk(
             {
-                review
+                review,
+                animeId
             }
         ))
     }
@@ -102,17 +105,34 @@ const DetailsComponent = () => {
 
                         <div className="mt-2">
                             <span className="display-6 border-light border-bottom"> Reviews </span>
-                            {
-                                currentUser &&
-                                <div className="form-group mt-2">
-                                <textarea className="form-control" rows="3" placeholder="Post your review here..."
+                            <div>
+                                {
+                                    currentUser &&
+                                    <div className="form-group mt-2 row">
+                                        <textarea className="col-12" rows="3" placeholder="Post your review here..."
                                           onChange={(e) => setReview(e.target.value)}></textarea>
-                                    <button type="button" className="btn btn-primary rounded-pill mt-2 float-end"
-                                            onClick={handleReview}>Post</button>
-                                </div>
-                            }
-
+                                        <button type="button" className="btn col-2 btn-primary rounded-pill mt-2" onClick={handleReview}>Post</button>
+                                    </div>
+                                }
+                            </div>
+                            <div className="mt-2">
+                                <ul className="list-group">
+                                    {
+                                        reviews.map((r) =>
+                                                        <li className="list-group-item">
+                                                            <div className="fw-bold">
+                                                                {r.author.firstName} {r.author.lastName}
+                                                            </div>
+                                                            <div>
+                                                                {r.review}
+                                                            </div>
+                                                        </li>
+                                        )
+                                    }
+                                </ul>
+                            </div>
                         </div>
+
                     </div>
                 }
             </>
