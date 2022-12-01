@@ -1,22 +1,16 @@
-import {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findAllUsersThunk} from "./users-thunk";
 
 const UserList = () => {
-    // const [users, setUsers] = useState([])
     const {users} = useSelector((state) => state.users)
-    // const findAllUsers = async () => {
-    //     const users = await service.findAllUsers()
-    //     setUsers(users)
-    // }
     const dispatch = useDispatch()
     useEffect(() => {
-        // findAllUsers()
         dispatch(findAllUsersThunk())
     }, [])
     return(
         <>
-            <h1>Users {users.length}</h1>
+            <h3 className="text-center">Users</h3>
             <ul className="list-group">
                 {
                     users.map((user) =>

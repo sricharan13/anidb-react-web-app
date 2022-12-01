@@ -19,6 +19,7 @@ const HomeComponent = () => {
     }, [])
     return(
         <>
+            <h3 className="text-center">Home</h3>
             <div>
                 {/*Recently Released*/}
                 <SingleCarousel className="mt-2">
