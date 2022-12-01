@@ -10,6 +10,7 @@ const Register = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [accountType, setAccountType] = useState('OTAKU')
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
@@ -19,11 +20,11 @@ const Register = () => {
             return
         }
         setError(null)
-        const newUser = {username, password, firstName, lastName, email}
+        const newUser = {username, password, firstName, lastName, email, accountType}
         dispatch(registerThunk(newUser))
     }
     if (currentUser) {
-        return (<Navigate to={'/profile'}/>)
+        return (<Navigate to={'/profile/account'}/>)
     }
     return(
         <>
@@ -59,6 +60,11 @@ const Register = () => {
                     className="form-control mb-2 rounded-pill"
                     placeholder="Re-Enter Password"
                     onChange={(e) => setValidatePassword(e.target.value)}/>
+                <select className="form-control mb-2 rounded-pill" onChange={(e) => setAccountType(e.target.value)}>
+                    <option value="" disabled={true} selected={true} hidden={true}>Account Type</option>
+                    <option value="OTAKU">Otaku</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
                 <button
                     onClick={handleRegisterBtn}
                     className="btn btn-primary rounded-pill">
