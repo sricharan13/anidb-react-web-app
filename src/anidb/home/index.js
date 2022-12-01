@@ -1,9 +1,10 @@
 import "./index.css";
-import {Carousel, Card, Stack} from 'react-bootstrap';
+import {Carousel as SingleCarousel} from 'react-bootstrap';
+import Carousel from "react-multi-carousel";
+import 'react-multi-carousel/lib/styles.css';
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {findRecentAnimeEpisodesThunk, findTrendingAnimeThunk} from "./home-thunks";
-import {Link} from "react-router-dom";
 import {responsive} from "../responsive";
 
 
@@ -18,79 +19,43 @@ const HomeComponent = () => {
     }, [])
     return(
         <>
-            <pre>
-                {JSON.stringify(recentEp)}
-            </pre>
-
-            <pre>
-                {JSON.stringify(trending)}
-            </pre>
-
-            <div className="row">
+            <div>
                 {/*Recently Released*/}
-                <Carousel className="mt-2">
-                    {
-                        recentEp.map((ep) =>
-                                <Carousel.Item className="bg-dark rounded-2">
-                                    <div className="d-flex justify-content-between">
-                                        <div className="text-light ms-5 mt-5">
-                                            <h3>{ep.title.english ? ep.title.english: ep.title.romaji}</h3>
-                                            <span>{ep.episodeTitle} (Ep. No: {ep.episodeNumber}) </span> <br/>
-                                            <span>Type: {ep.type} </span> <br/>
-                                            <span>Rating: {ep.rating} </span> <br/>
-                                        </div>
-                                        <div>
-                                            <img className="d-block rounded" width={200} height={300} src={`${ep.image}`} alt="Unable to render"/>
-                                        </div>
-                                    </div>
-                                </Carousel.Item>
-                        )
-                    }
-                </Carousel>
+                <SingleCarousel className="mt-2">
+                    {recentEp.map((ep) =>
+                        <SingleCarousel.Item className="bg-dark rounded-2">
+                            <div className="d-flex justify-content-between">
+                                <div className="text-light ms-5 mt-5">
+                                    <h3>{ep.title.english ? ep.title.english: ep.title.romaji}</h3>
+                                    <span>{ep.episodeTitle} (Ep. No: {ep.episodeNumber}) </span> <br/>
+                                    <span>Type: {ep.type} </span> <br/>
+                                    <span>Rating: {ep.rating} </span> <br/>
+                                </div>
+                                <div>
+                                    <img className="d-block rounded" width={200} height={300} src={`${ep.image}`} alt="Unable to render"/>
+                                </div>
+                            </div>
+                        </SingleCarousel.Item>
+                    )}
+                </SingleCarousel>
+            </div>
 
-                {/*Action Anime*/}
-                <div className="mt-2 rounded">
-                    <Carousel style={{ background: "grey" }}>{images.map((review, index) => (
-                        <Carousel.Item>
-                            <Stack direction="horizontal" className="h-100 justify-content-center align-items-center"
-                                gap={3}>
-                                <Card style={{ width: "18rem" }}>
-                                    <Card.Body>
-                                        <Card.Img src="/images/space-x-starship.webp"/>
-                                        <Card.Title>Card Title</Card.Title>
-                                        <Card.Text>
-                                            Some quick example text to build on the card title and
-                                            make up the bulk of the card's content.
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                                <Card style={{width: "18rem"}}>
-                                    <Card.Body>
-                                        <Card.Img src="/images/one-piece-banner.jpeg"/>
-                                        <Card.Title>Card Title</Card.Title>
-                                        <Card.Text>
-                                            Some quick example text to build on the card title and
-                                            make up the bulk of the card's content.
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                                <Card style={{width: "18rem"}}>
-                                    <Card.Body>
-                                        <Card.Img src="/images/one-piece-banner.jpeg"/>
-                                        <Card.Title>Card Title</Card.Title>
-                                        <Card.Text>
-                                            Some quick example text to build on the card title and
-                                            make up the bulk of the card's content.
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </Stack>
-                        </Carousel.Item>))}
+            {/*Action Anime*/}
+            <div className="mt-2">
+                <span className="display-6"> Trending Now </span>
+                <div className="mt-2">
+                    <Carousel responsive={responsive} autoPlay={true} infinite={true}>
+                        {trending.map((t) => (
+                            <div style={{width: "10rem"}} className="text-center">
+                                    <img src={`${t.image}`} height={200} width={128}/>
+                                    <div>{t.title.english ? t.title.english: t.title.romaji}</div>
+                                    <div>{t.rating} | {t.type}</div>
+                            </div>
+                        ))}
                     </Carousel>
                 </div>
-
-                {/*Anime News*/}
             </div>
+
         </>
     );
 }

@@ -14,6 +14,9 @@ import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
 import reviewsReducer from "./reviews/reviews-reducer";
 import homeReducer from "./reducers/home-reducer";
+import Account from "./users/account";
+import Favourites from "./users/favourites";
+import Friends from "./users/friends";
 
 const store = configureStore({
                                  reducer: {
@@ -29,7 +32,7 @@ function Anidb() {
         <Provider store={store}>
             <BrowserRouter>
                 <CurrentUser>
-                    <div className="row mt-2 ms-2 me-2">
+                    <div className="row mt-2 ms-2 me-2 mb-2">
                         <div className="col-2 col-md-2 col-lg-1 col-xl-2">
                             <NavigationComponent/>
                         </div>
@@ -39,7 +42,11 @@ function Anidb() {
                                 <Route path="/search" element={<SearchComponent/>}/>
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/register" element={<Register/>}/>
-                                <Route path="/profile" element={<Profile/>}/>
+                                <Route path="/profile" element={<Profile/>}>
+                                    <Route path="account" element={<Account/>}/>
+                                    <Route path="favourites" element={<Favourites/>}/>
+                                    <Route path="friends" element={<Friends/>}/>
+                                </Route>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>
                         </div>

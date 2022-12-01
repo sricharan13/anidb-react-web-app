@@ -34,35 +34,38 @@ const Register = () => {
                     {error}
                 </div>
             }
-            <input
-                className="form-control mb-2"
-                placeholder="Enter First Name"
-                onChange={(e) => setFirstName(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Last Name"
-                onChange={(e) => setLastName(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Email"
-                onChange={(e) => setEmail(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Username"
-                onChange={(e) => setUsername(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Password"
-                onChange={(e) => setPassword(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Re-Enter Password"
-                onChange={(e) => setValidatePassword(e.target.value)}/>
-            <button
-                onClick={handleRegisterBtn}
-                className="btn btn-primary w-100">
-                Register
-            </button>
+            <div className="text-center">
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter First Name"
+                    onChange={(e) => setFirstName(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Last Name"
+                    onChange={(e) => setLastName(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Username"
+                    onChange={(e) => setUsername(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Password"
+                    onChange={(e) => setPassword(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Re-Enter Password"
+                    onChange={(e) => setValidatePassword(e.target.value)}/>
+                <button
+                    onClick={handleRegisterBtn}
+                    className="btn btn-primary rounded-pill">
+                    Register
+                </button>
+            </div>
+
         </>
     )
 }

@@ -6,6 +6,7 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
+import Form from 'react-bootstrap/Form'
 
 
 const DetailsComponent = () => {
@@ -18,7 +19,6 @@ const DetailsComponent = () => {
     useEffect(() => {
         dispatch(findByAnimeIdThunk(animeId))
     }, [])
-    // console.log(details)
     const handleReview= () => {
         dispatch(createReviewThunk(
             {
@@ -36,25 +36,29 @@ const DetailsComponent = () => {
         // ))
     }
     return (
-        // <pre> {JSON.stringify(details)} </pre>
         <>
             {
                 details &&
                 <div>
                     <div className="border-dark border-bottom">
-                        <div className="fw-bold">
+                        <div className="d-flex justify-content-between align-items-center">
                             <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
+                            <div className="text-center">
+                                <h6>Rate this Anime</h6>
+                                <input type="range" name="rating" className="form-range" min="0" max="100" step="1"/>
+                            </div>
                         </div>
                     </div>
                     <div className="row mt-2">
                         <div className="col-8">
                             <div> <span className="fw-bold mb-2"> Synopsis </span> </div>
-                            {details.description.replaceAll(/( |<([^>]+)>)/ig, "")}
+                            {details.description.replaceAll(/( |<([^>]+)>)/ig, " ")}
                         </div>
                         <div className="col-4 mb-2">
-                            <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
-                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
-                                    onClick={handleAddFavorite}>Add to Favorites</button>
+                            <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end"/>
+                            <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4" onClick={handleAddFavorite}>
+                                Add to Favorites
+                            </button>
                         </div>
                     </div>
                     <div className="mt-2 mb-2">
@@ -73,7 +77,7 @@ const DetailsComponent = () => {
                         <div className="mt-2">
                             <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
                                 details.characters.map((character) => (
-                                    <div style={{width: "15rem"}} >
+                                    <div style={{width: "10rem"}} >
                                         <div className={"text-center"}>
                                             <img src={`${character.image}`} height={200} width={128}/>
                                             <div>{character.name.full}</div>
@@ -85,12 +89,12 @@ const DetailsComponent = () => {
                         </div>
                     </div>
 
-                    <div className="mt-2 ">
+                    <div className="mt-2">
                         <span className="display-6 border-light border-bottom"> Suggested Anime </span>
                         <div className="mt-2">
                             <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
                                 details.recommendations.map((recommendation) => (
-                                    <div style={{width: "15rem"}} >
+                                    <div style={{width: "10rem"}} >
                                         <div className={"text-center"}>
                                             <img src={`${recommendation.image}`} height={200} width={128}/>
                                             <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
