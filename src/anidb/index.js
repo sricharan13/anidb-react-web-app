@@ -16,6 +16,7 @@ import DetailsComponent from "./home/details-component";
 import reviewsReducer from "./reviews/reviews-reducer";
 import homeReducer from "./reducers/home-reducer";
 import ProtectedRoute from "./users/protected-route";
+import favoritesReducer from "./favorites/favorites-reducer";
 
 const store = configureStore({
                                  reducer: {
@@ -23,7 +24,8 @@ const store = configureStore({
                                      card: cardReducer,
                                      anisearch: searchReducer,
                                      reviews: reviewsReducer,
-                                     home: homeReducer
+                                     home: homeReducer,
+                                     favorites: favoritesReducer
                                  }
 })
 

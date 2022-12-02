@@ -6,6 +6,8 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk, findReviewsByAnimeThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
+import {Link} from "react-router-dom";
+import {addToFavoritesThunk} from "../favorites/favorites-thunks";
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
@@ -14,12 +16,20 @@ const DetailsComponent = () => {
     const {reviews} = useSelector((state) => state.reviews)
     // console.log(currentUser)
     const [review, setReview] = useState('')
+    let {animeInfo} = {}
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findByAnimeIdThunk(animeId))
         dispatch(findReviewsByAnimeThunk(animeId))
     }, [])
     // console.log(details)
+    const getRequiredInfo = () => {
+        return {
+            animeId: details.id,
+            title: details.title.english ? details.title.english: details.title.romaji,
+            image: details.image,
+        }
+    }
     const handleReview= () => {
         dispatch(createReviewThunk(
             {
@@ -29,12 +39,7 @@ const DetailsComponent = () => {
         ))
     }
     const handleAddFavorite = () => {
-        // dispatch(addFavoriteThunk(
-        //     {
-        //         animeId,
-        //         author: currentUser._id
-        //     }
-        // ))
+        dispatch(addToFavoritesThunk(getRequiredInfo()))
     }
     return (
         // <pre> {JSON.stringify(details)} </pre>
@@ -54,8 +59,11 @@ const DetailsComponent = () => {
                             </div>
                             <div className="col-4 mb-2">
                                 <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
-                                <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
-                                        onClick={handleAddFavorite}>Add to Favorites</button>
+                                {
+                                    currentUser &&
+                                    <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
+                                            onClick={handleAddFavorite}>Add to Favorites</button>
+                                }
                             </div>
                         </div>
                         <div className="mt-2 mb-2">
@@ -120,8 +128,10 @@ const DetailsComponent = () => {
                                     {
                                         reviews.map((r) =>
                                                         <li className="list-group-item">
-                                                            <div className="fw-bold">
-                                                                {r.author.firstName} {r.author.lastName}
+                                                            <div>
+                                                                <Link to={`/profile/${r.author._id}`} className="fw-bold text-decoration-none text-dark">
+                                                                    {r.author.firstName} {r.author.lastName}
+                                                                </Link>
                                                             </div>
                                                             <div>
                                                                 {r.review}
