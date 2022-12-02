@@ -21,13 +21,15 @@ import MyReviews from "./users/my-reviews";
 import UserList from "./users";
 import ProtectedRoute from "./users/protected-route";
 import PublicProfile from "./users/public-profile";
+import followsReducer from "./follows/follows-reducer";
 
 const store = configureStore({
                                  reducer: {
                                      users: usersReducer,
                                      anisearch: searchReducer,
                                      reviews: reviewsReducer,
-                                     home: homeReducer
+                                     home: homeReducer,
+                                     follows: followsReducer
                                  }
 })
 

@@ -2,11 +2,17 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findUsersListThunk} from "./users-thunk";
 import {Link} from "react-router-dom";
+import {followUserThunk} from "../follows/follows-thunks";
 
 const UserList = () => {
     const {users} = useSelector((state) => state.users)
     const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
+    const handleFollowBtn = (followedId) => {
+        dispatch(followUserThunk({
+            followed: followedId
+        }))
+    }
     useEffect(() => {
         dispatch(findUsersListThunk())
     }, [])
@@ -20,7 +26,7 @@ const UserList = () => {
                             {user.username}
                         </Link>
                         {currentUser && currentUser.accountType === 'OTAKU' &&
-                            <button className="btn btn-sm btn-primary rounded-pill">Follow</button>
+                            <button className="btn btn-sm btn-primary rounded-pill" onClick={() => handleFollowBtn(user._id)}>Follow</button>
                         }
                         {currentUser && currentUser.accountType === 'ADMIN' &&
                             <button className="btn btn-sm btn-danger rounded-pill">Delete</button>
