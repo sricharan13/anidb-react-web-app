@@ -29,8 +29,15 @@ export const findAllUsers = async () => {
     return response.data
 }
 
+export const findUsersList = async () => {
+    const response = await api.get(USER_API_URL)
+    return response.data
+}
+
 export const createUser = () => {
 
 }
 
-const deleteUser = () => {}
+const deleteUser = () => {
+
+}

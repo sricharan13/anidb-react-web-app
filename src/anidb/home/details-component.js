@@ -7,6 +7,7 @@ import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk, findReviewsByAnimeThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
 import {Accordion} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 
 const DetailsComponent = () => {
@@ -132,7 +133,9 @@ const DetailsComponent = () => {
                                     reviews.map((r) =>
                                         <li className="list-group-item">
                                             <div className="fw-bold">
-                                                {r.author.firstName} {r.author.lastName}
+                                                <Link to={`/profile/${r.author._id}`} className="text-decoration-none">
+                                                    {r.author.username}
+                                                </Link>
                                             </div>
                                             <div>
                                                 {r.review}

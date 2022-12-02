@@ -1,25 +1,32 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findAllUsersThunk} from "./users-thunk";
+import {findUsersListThunk} from "./users-thunk";
+import {Link} from "react-router-dom";
 
 const UserList = () => {
     const {users} = useSelector((state) => state.users)
+    const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(findAllUsersThunk())
+        dispatch(findUsersListThunk())
     }, [])
     return(
         <>
             <h3 className="text-center">Users</h3>
             <ul className="list-group">
-                {
-                    users.map((user) =>
-                        <li className="list-group-item"
-                            key={user._id}>
+                { users && users.map((user) =>
+                    <li className="list-group-item d-flex justify-content-between align-items-center" key={user._id}>
+                        <Link to={`/profile/${users._id}`} className="text-decoration-none">
                             {user.username}
-                        </li>
-                    )
-                }
+                        </Link>
+                        {currentUser && currentUser.accountType === 'OTAKU' &&
+                            <button className="btn btn-sm btn-primary rounded-pill">Follow</button>
+                        }
+                        {currentUser && currentUser.accountType === 'ADMIN' &&
+                            <button className="btn btn-sm btn-danger rounded-pill">Delete</button>
+                        }
+                    </li>
+                )}
             </ul>
         </>
     )

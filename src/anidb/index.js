@@ -20,6 +20,7 @@ import People from "./users/people";
 import MyReviews from "./users/my-reviews";
 import UserList from "./users";
 import ProtectedRoute from "./users/protected-route";
+import PublicProfile from "./users/public-profile";
 
 const store = configureStore({
                                  reducer: {
@@ -52,6 +53,7 @@ function Anidb() {
                                     <Route path="people" element={<People/>}/>
                                     <Route path="my-reviews" element={<MyReviews/>}/>
                                 </Route>
+                                <Route path="/profile/:uid" element={<PublicProfile/>}/>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>
                         </div>

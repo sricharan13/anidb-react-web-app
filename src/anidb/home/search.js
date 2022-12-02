@@ -12,6 +12,7 @@ const SearchComponent = () => {
     }, [])
     return (
         <>
+            <h3 className="text-center">Search</h3>
             <div className="input-group">
                 <input type="search" className="form-control rounded rounded-pill me-2" placeholder="Search Anime..."
                        aria-label="Search" aria-describedby="search-addon"
