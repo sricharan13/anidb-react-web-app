@@ -25,8 +25,8 @@ const favoritesReducer = createSlice(
                 state.favorites = action.payload
             },
             [isFavoriteThunk.fulfilled]: (state, action) => {
-                console.log(action.payload)
-                if (action.payload.length) { state.isFav = true }
+                // console.log(action.payload)
+                state.isFav = !!action.payload.length;
             }
         }
     }
