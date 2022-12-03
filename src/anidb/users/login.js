@@ -19,7 +19,7 @@ const Login = () => {
         }
     }
     if (currentUser) {
-        return (<Navigate to={'/profile'}/>)
+        return (<Navigate to={'/profile/account'}/>)
     }
     return(
         <>
@@ -30,12 +30,14 @@ const Login = () => {
                     {error}
                 </div>
             }
-            <input className="form-control mb-2" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)}/>
-            <input className="form-control mb-2" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
-            <button onClick={handleLoginBtn} className="btn btn-primary w-100">Login</button>
-            <div className="text-center mt-2">
-                <span>Don't have an account? </span>
-                <Link to="/register"><span>Register Now</span></Link>
+            <div className="text-center">
+                <input className="form-control mb-2 rounded-pill" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)}/>
+                <input className="form-control mb-2 rounded-pill" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
+                <button onClick={handleLoginBtn} className="btn btn-primary rounded-pill">Login</button>
+                <div className="mt-2">
+                    <span>Don't have an account? </span>
+                    <Link to="/register"><span>Register Now</span></Link>
+                </div>
             </div>
         </>
     )

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {registerThunk} from "./users-thunk";
-import {Navigate, useNavigate} from "react-router";
+import {Navigate} from "react-router";
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -10,6 +10,7 @@ const Register = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [accountType, setAccountType] = useState('OTAKU')
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
@@ -19,11 +20,11 @@ const Register = () => {
             return
         }
         setError(null)
-        const newUser = {username, password, firstName, lastName, email}
+        const newUser = {username, password, firstName, lastName, email, accountType}
         dispatch(registerThunk(newUser))
     }
     if (currentUser) {
-        return (<Navigate to={'/profile'}/>)
+        return (<Navigate to={'/profile/account'}/>)
     }
     return(
         <>
@@ -34,35 +35,43 @@ const Register = () => {
                     {error}
                 </div>
             }
-            <input
-                className="form-control mb-2"
-                placeholder="Enter First Name"
-                onChange={(e) => setFirstName(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Last Name"
-                onChange={(e) => setLastName(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Email"
-                onChange={(e) => setEmail(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Username"
-                onChange={(e) => setUsername(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Enter Password"
-                onChange={(e) => setPassword(e.target.value)}/>
-            <input
-                className="form-control mb-2"
-                placeholder="Re-Enter Password"
-                onChange={(e) => setValidatePassword(e.target.value)}/>
-            <button
-                onClick={handleRegisterBtn}
-                className="btn btn-primary w-100">
-                Register
-            </button>
+            <div className="text-center">
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter First Name"
+                    onChange={(e) => setFirstName(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Last Name"
+                    onChange={(e) => setLastName(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Username"
+                    onChange={(e) => setUsername(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Enter Password"
+                    onChange={(e) => setPassword(e.target.value)}/>
+                <input
+                    className="form-control mb-2 rounded-pill"
+                    placeholder="Re-Enter Password"
+                    onChange={(e) => setValidatePassword(e.target.value)}/>
+                <select className="form-control mb-2 rounded-pill" onChange={(e) => setAccountType(e.target.value)}>
+                    <option value="" disabled={true} selected={true} hidden={true}>Account Type</option>
+                    <option value="OTAKU">Otaku</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+                <button
+                    onClick={handleRegisterBtn}
+                    className="btn btn-primary rounded-pill">
+                    Register
+                </button>
+            </div>
+
         </>
     )
 }

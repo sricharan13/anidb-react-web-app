@@ -3,11 +3,7 @@ import axios from "axios";
 const BASE_API_URL = 'http://localhost:4000'
 const USER_API_URL = 'http://localhost:4000/users'
 
-const api = axios.create(
-    {
-        withCredentials: true
-    }
-);
+const api = axios.create({withCredentials: true});
 
 export const register = async (user) => {
     const response = await api.post(`${BASE_API_URL}/register`, user)
@@ -33,8 +29,15 @@ export const findAllUsers = async () => {
     return response.data
 }
 
+export const findUsersList = async () => {
+    const response = await api.get(USER_API_URL)
+    return response.data
+}
+
 export const createUser = () => {
 
 }
 
-const deleteUser = () => {}
+const deleteUser = () => {
+
+}

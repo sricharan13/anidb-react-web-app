@@ -28,7 +28,7 @@ const NavigationComponent = () => {
             </Link>
             {
                 screens.map((screen) =>
-                    <Link to={`/${screen}`} key={screen}
+                    <Link to={`/${screen === 'profile'?'profile/account': screen}`} key={screen}
                           className={`list-group-item text-center ${parts[1] === screen?'active': ''}`}>
                         <span className="text-capitalize">{screen}</span>
                     </Link>

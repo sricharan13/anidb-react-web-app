@@ -1,67 +1,36 @@
-import {useDispatch, useSelector} from "react-redux";
-import {logoutThunk} from "./users-thunk";
-import {Navigate} from "react-router";
+import {useSelector} from "react-redux";
+import {Navigate, Outlet, useLocation} from "react-router";
 import React from "react";
+import {Link} from "react-router-dom";
 
 const Profile = () => {
     const {currentUser} = useSelector((state) => state.users)
-    const [currentUserState, setCurrentUserState] = React.useState({currentUser})
-    const dispatch = useDispatch()
-    const handleLogout = () => {
-        dispatch(logoutThunk())
-    }
-    const updateCurrentUserData = (event) => {
-        setCurrentUserState({
-            ...currentUserState,
-            [event.target.name]: event.target.value
-        })
-    }
+    const {pathname} = useLocation()
+    const parts = pathname.split('/')
     if (!currentUser) {
         return (<Navigate to={'/login'}/>)
     }
     return (
         <>
             <h3 className="text-center">Profile</h3>
-            {
-                currentUser && (
-                    <div>
-                        <div className="d-flex justify-content-between align-items-center">
-                            <h4>Welcome, {currentUser.username}</h4>
-                            <button className="btn btn-danger" onClick={handleLogout}>
-                                Logout
-                            </button>
-                        </div>
-                        <div className="mt-2">
-                            <div className="mt-2 form-floating">
-                                <input type="text" id="firstName" className="form-control" name="firstName"
-                                       defaultValue={currentUser.firstName}
-                                       onChange={(event) => updateCurrentUserData(event)}/>
-                                <label htmlFor="firstName">First Name</label>
-                            </div>
-                            <div className="mt-2 form-floating">
-                                <input type="text" id="lastName" className="form-control" name="lastName"
-                                       defaultValue={currentUser.lastName}
-                                       onChange={(event) => updateCurrentUserData(event)}/>
-                                <label htmlFor="lastName">Last Name</label>
-                            </div>
-                            <div className="mt-2 form-floating">
-                                <input type="text" id="password" className="form-control" name="password"
-                                       defaultValue={currentUser.password}
-                                       onChange={(event) => updateCurrentUserData(event)}/>
-                                <label htmlFor="password">Password</label>
-                            </div>
-                            <div className="mt-2 form-floating">
-                                <input type="text" id="email" className="form-control" name="email"
-                                       defaultValue={currentUser.email}
-                                       onChange={(event) => updateCurrentUserData(event)}/>
-                                <label htmlFor="email">Email</label>
-                            </div>
-                        </div>
-                        <button className="btn btn-primary form-control mt-2">
-                            Update
-                        </button>
-                    </div>
-                )}
+            <ul className="nav mb-2 nav-tabs">
+                <li className="nav-item">
+
+                    <Link to="/profile/account" className={`nav-link ${parts[2] === 'account'?'active': ''}`}>Account</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/profile/people" className={`nav-link ${parts[2] === 'people'?'active': ''}`}>People</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/profile/favourites" className={`nav-link ${parts[2] === 'favourites'?'active': ''}`}>Favourites</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/profile/my-activity" className={`nav-link ${parts[2] === 'my-activity'?'active': ''}`}>My Activity</Link>
+                </li>
+            </ul>
+            <div className="mt-2">
+                <Outlet/>
+            </div>
         </>
     )
 }
