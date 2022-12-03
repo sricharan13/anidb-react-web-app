@@ -15,6 +15,11 @@ export const createRating = async (rating) => {
     return response.data
 }
 
+export const updateRating = async (rating) => {
+    const response = await api.post(`${RATINGS_API}/${rating.animeId}`, rating)
+    return response.data
+}
+
 export const findRatingForAnime = async (animeId) => {
     // const {animeId, userId} = ids
     // console.log(animeId)

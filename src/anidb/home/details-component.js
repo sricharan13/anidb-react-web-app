@@ -13,7 +13,11 @@ import {
     removeFromFavoritesThunk
 } from "../favorites/favorites-thunks";
 import {Accordion} from "react-bootstrap";
-import {createRatingThunk, findRatingForAnimeThunk} from "../ratings/ratings-thunks";
+import {
+    createRatingThunk,
+    findRatingForAnimeThunk,
+    updateRatingThunk
+} from "../ratings/ratings-thunks";
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
@@ -35,8 +39,9 @@ const DetailsComponent = () => {
             // console.log("dispatching")
             dispatch(isFavoriteThunk(animeId))
             dispatch(findRatingForAnimeThunk(animeId))
+            setRating(animeRating.length === 1 ? animeRating[0].rating : 50)
         }
-    }, [isFav, JSON.stringify(reviews)])
+    }, [isFav, JSON.stringify(reviews), JSON.stringify(animeRating)])
     const handleReview = () => {
         dispatch(createReviewThunk(
             {
@@ -52,6 +57,14 @@ const DetailsComponent = () => {
                 rating: rating,
                 animeId: animeId,
                 animeTitle: details.title.english ? details.title.english: details.title.romaji,
+            }
+        ))
+    }
+    const handleUpdateRating = () => {
+        dispatch(updateRatingThunk(
+            {
+                rating: rating,
+                animeId: animeId
             }
         ))
     }
@@ -75,15 +88,27 @@ const DetailsComponent = () => {
                     <div className="border-dark border-bottom">
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
-                            <div className="text-center">
-                                <div className="d-flex">
-                                    <input type="range" name="rating" value={animeRating.length === 1 ? animeRating[0].rating : rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
-                                    <span className="ms-1"><strong>{animeRating.length === 1 ? animeRating[0].rating : rating}</strong></span>
+                            {
+                                currentUser &&
+                                <div className="text-center">
+                                    <div className="d-flex">
+                                        <input type="range" name="rating" value={rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
+                                        <span className="ms-1"><strong>{rating}</strong></span>
+                                    </div>
+                                    {
+                                        animeRating.length === 0 &&
+                                        <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleRating}>
+                                            Rate Anime
+                                        </button>
+                                    }
+                                    {
+                                        animeRating && animeRating.length === 1 &&
+                                        <button type="button" className="btn btn-sm btn-outline-primary rounded-pill" onClick={handleUpdateRating}>
+                                            Update Rating
+                                        </button>
+                                    }
                                 </div>
-                                <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleRating}>
-                                    Rate Anime
-                                </button>
-                            </div>
+                            }
                         </div>
                         <div className="row mt-2">
                             <div className="col-8">

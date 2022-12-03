@@ -43,7 +43,7 @@ const MyActivity =() => {
                         <div className="list-group">
                             {
                                 userRatings && userRatings.map((rating) =>
-                                                           <Link to={`/anime/${rating.animeId}`} key={rating.animeId} className="list-group-item">
+                                                           <Link to={`/anime/${rating.animeId}`} className="list-group-item">
                                                                <div>
                                                                    <span> {rating.animeTitle} </span>
                                                                    <span className="float-end"> {rating.rating} </span>

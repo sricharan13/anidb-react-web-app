@@ -1,5 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createRatingThunk, findRatingsByUserThunk, findRatingForAnimeThunk} from "./ratings-thunks";
+import {
+    createRatingThunk,
+    findRatingsByUserThunk,
+    findRatingForAnimeThunk,
+    updateRatingThunk
+} from "./ratings-thunks";
 
 const ratingsReducer = createSlice({
         name: 'ratings',
@@ -11,10 +16,14 @@ const ratingsReducer = createSlice({
             [createRatingThunk.fulfilled]: (state, action) => {
                 state.animeRating = action.payload
             },
-            [findRatingForAnimeThunk.fulfilled]: (state, action) => {
-                console.log(action.payload)
+            [updateRatingThunk.fulfilled]: (state, action) => {
                 state.animeRating = action.payload
-                console.log(state.animeRating)
+                // console.log(state.animeRating)
+            },
+            [findRatingForAnimeThunk.fulfilled]: (state, action) => {
+                // console.log(action.payload)
+                state.animeRating = action.payload
+                // console.log(state.animeRating)
             },
             [findRatingsByUserThunk.fulfilled]: (state, action) => {
                 state.userRatings = action.payload
