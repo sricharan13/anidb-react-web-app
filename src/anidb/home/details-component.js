@@ -7,49 +7,82 @@ import 'react-multi-carousel/lib/styles.css';
 import {createReviewThunk, findReviewsByAnimeThunk} from "../reviews/reviews-thunks";
 import {responsive} from "../responsive";
 import {Link} from "react-router-dom";
-import {addToFavoritesThunk} from "../favorites/favorites-thunks";
+import {
+    addToFavoritesThunk,
+    isFavoriteThunk,
+    removeFromFavoritesThunk
+} from "../favorites/favorites-thunks";
+import {Accordion} from "react-bootstrap";
+import {createRatingThunk, findRatingForAnimeThunk} from "../ratings/ratings-thunks";
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
     const {details} = useSelector((state) => state.anisearch)
     const {currentUser} = useSelector((state) => state.users)
     const {reviews} = useSelector((state) => state.reviews)
-    // console.log(currentUser)
+    const {isFav} = useSelector((state) => state.favorites)
+    // console.log(isFav)
+    const {animeRating} = useSelector((state) => state.ratings)
+    // console.log(animeRating.length)
     const [review, setReview] = useState('')
-    let {animeInfo} = {}
+    const [rating, setRating] = useState(50)
     const dispatch = useDispatch()
     useEffect(() => {
+        // console.log("Dispatching")
         dispatch(findByAnimeIdThunk(animeId))
         dispatch(findReviewsByAnimeThunk(animeId))
-    }, [])
-    // console.log(details)
-    const getRequiredInfo = () => {
-        return {
-            animeId: details.id,
-            title: details.title.english ? details.title.english: details.title.romaji,
-            image: details.image,
+        if (currentUser) {
+            // console.log("dispatching")
+            dispatch(isFavoriteThunk(animeId))
+            dispatch(findRatingForAnimeThunk(animeId))
         }
-    }
-    const handleReview= () => {
+    }, [isFav, JSON.stringify(reviews)])
+    const handleReview = () => {
         dispatch(createReviewThunk(
             {
-                review,
-                animeId
+                review: review,
+                animeId: animeId,
+                animeTitle: details.title.english ? details.title.english: details.title.romaji,
+            }
+        ))
+    }
+    const handleRating = () => {
+        dispatch(createRatingThunk(
+            {
+                rating: rating,
+                animeId: animeId,
+                animeTitle: details.title.english ? details.title.english: details.title.romaji,
             }
         ))
     }
     const handleAddFavorite = () => {
-        dispatch(addToFavoritesThunk(getRequiredInfo()))
+        dispatch(addToFavoritesThunk(
+            {
+                animeId: animeId,
+                animeTitle: details.title.english ? details.title.english: details.title.romaji,
+                animeImg: details.image,
+            }
+        ))
+    }
+    const handleRemoveFavorite = () => {
+        dispatch(removeFromFavoritesThunk(animeId))
     }
     return (
-        // <pre> {JSON.stringify(details)} </pre>
-            <>
-                {
-                    details &&
-                    <div>
-                        <div className="border-dark border-bottom">
-                            <div className="fw-bold">
-                                <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
+        <>
+            {
+                details &&
+                <div>
+                    <div className="border-dark border-bottom">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                            <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
+                            <div className="text-center">
+                                <div className="d-flex">
+                                    <input type="range" name="rating" value={animeRating.length === 1 ? animeRating[0].rating : rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
+                                    <span className="ms-1"><strong>{animeRating.length === 1 ? animeRating[0].rating : rating}</strong></span>
+                                </div>
+                                <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleRating}>
+                                    Rate Anime
+                                </button>
                             </div>
                         </div>
                         <div className="row mt-2">
@@ -60,9 +93,14 @@ const DetailsComponent = () => {
                             <div className="col-4 mb-2">
                                 <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
                                 {
-                                    currentUser &&
+                                    currentUser && !isFav &&
                                     <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
                                             onClick={handleAddFavorite}>Add to Favorites</button>
+                                }
+                                {
+                                    currentUser && isFav &&
+                                    <button type="button" className="btn btn-outline-danger rounded-pill mt-2 float-end me-2"
+                                            onClick={handleRemoveFavorite}>Remove from Favorites</button>
                                 }
                             </div>
                         </div>
@@ -76,61 +114,58 @@ const DetailsComponent = () => {
                             <span className="fw-bold mb-2"> Episode Duration: </span> <span> {details.duration} min. per ep. </span> <br/>
                             <span className="fw-bold mb-2"> Studio(s): </span> <span> {details.studios.toString()} </span> <br/>
                         </div>
-
-                        <div className="mt-2 ">
-                            <span className="display-6 border-light border-bottom"> Characters </span>
-                            <div className="mt-2">
-                                <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
-                                    details.characters.map((character) => (
-                                        <div style={{width: "15rem"}} >
-                                            <div className={"text-center"}>
-                                                <img src={`${character.image}`} height={200} width={128}/>
-                                                <div>{character.name.full}</div>
-                                                <div>({character.role})</div>
+                        <Accordion>
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header><strong>Characters</strong></Accordion.Header>
+                                <Accordion.Body>
+                                    <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
+                                        details.characters.map((character) => (
+                                            <div style={{width: "10rem"}} >
+                                                <div className={"text-center"}>
+                                                    <img src={`${character.image}`} height={200} width={128}/>
+                                                    <div>{character.name.full}</div>
+                                                    <div>({character.role})</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </div>
-
-                        <div className="mt-2 ">
-                            <span className="display-6 border-light border-bottom"> Suggested Anime </span>
-                            <div className="mt-2">
-                                <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
-                                    details.recommendations.map((recommendation) => (
-                                        <div style={{width: "10rem"}} >
-                                            <div className={"text-center"}>
-                                                <img src={`${recommendation.image}`} height={200} width={128}/>
-                                                <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
-                                                <div>Rating: {recommendation.rating}</div>
+                                        ))}
+                                    </Carousel>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="1">
+                                <Accordion.Header><strong>Suggested Anime</strong></Accordion.Header>
+                                <Accordion.Body>
+                                    <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
+                                        details.recommendations.map((recommendation) => (
+                                            <div style={{width: "10rem"}} >
+                                                <div className={"text-center"}>
+                                                    <img src={`${recommendation.image}`} height={200} width={128}/>
+                                                    <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
+                                                    <div>Rating: {recommendation.rating}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </div>
-
+                                        ))}
+                                    </Carousel>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
                         <div className="mt-2">
                             <span className="display-6 border-light border-bottom"> Reviews </span>
-                            <div>
-                                {
-                                    currentUser &&
-                                    <div className="form-group mt-2 row">
-                                        <textarea className="col-12" rows="3" placeholder="Post your review here..."
-                                          onChange={(e) => setReview(e.target.value)}></textarea>
-                                        <button type="button" className="btn col-2 btn-primary rounded-pill mt-2" onClick={handleReview}>Post</button>
-                                    </div>
-                                }
+                            <div>{currentUser &&
+                                  <div className="form-group mt-2 row">
+                                    <textarea className="col-12" rows="3" placeholder="Post your review here..."
+                                              onChange={(e) => setReview(e.target.value)}></textarea>
+                                      <button type="button" className="btn col-2 btn-primary rounded-pill mt-2" onClick={handleReview}>Post</button>
+                                  </div>
+                            }
                             </div>
                             <div className="mt-2">
                                 <ul className="list-group">
                                     {
                                         reviews.map((r) =>
                                                         <li className="list-group-item">
-                                                            <div>
-                                                                <Link to={`/profile/${r.author._id}`} className="fw-bold text-decoration-none text-dark">
-                                                                    {r.author.firstName} {r.author.lastName}
+                                                            <div className="fw-bold">
+                                                                <Link to={`/profile/${r.author._id}`} className="text-decoration-none">
+                                                                    {r.author.username}
                                                                 </Link>
                                                             </div>
                                                             <div>
@@ -142,10 +177,10 @@ const DetailsComponent = () => {
                                 </ul>
                             </div>
                         </div>
-
                     </div>
-                }
-            </>
+                </div>
+            }
+        </>
     )
 }
 
