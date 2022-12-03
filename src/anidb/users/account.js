@@ -1,19 +1,23 @@
 import {useDispatch, useSelector} from "react-redux";
-import React from "react";
-import {logoutThunk} from "./users-thunk";
+import React, {useEffect} from "react";
+import {logoutThunk, updateCurrentUserThunk} from "./users-thunk";
+
 
 const Account = () => {
     const {currentUser} = useSelector((state) => state.users)
     const [currentUserState, setCurrentUserState] = React.useState({currentUser})
     const dispatch = useDispatch()
-    const handleLogout = () => {
-        dispatch(logoutThunk())
-    }
     const updateCurrentUserData = (event) => {
         setCurrentUserState({
             ...currentUserState,
             [event.target.name]: event.target.value
         })
+    }
+    const handleLogout = () => {
+        dispatch(logoutThunk())
+    }
+    const updateCurrentUser = () => {
+        dispatch(updateCurrentUserThunk(currentUserState))
     }
     return(
         <>
@@ -51,7 +55,7 @@ const Account = () => {
                             <label htmlFor="email">Email</label>
                         </div>
                     </div>
-                    <button className="btn btn-primary rounded-pill mt-2">
+                    <button className="btn btn-primary rounded-pill mt-2" onClick={updateCurrentUser}>
                         Update
                     </button>
                 </div>

@@ -20,7 +20,7 @@ export const findReviewsByAnime = async (animeId) => {
     return response.data
 }
 
-export const findReviewsByAuthor = async (authorId) => {
-    const response = await api.get(`${USER_REVIEWS_API}/${authorId}/reviews`)
+export const findReviewsByAuthor = async (author) => {
+    const response = await api.get(`${USER_REVIEWS_API}/${author}/reviews`)
     return response.data
 }

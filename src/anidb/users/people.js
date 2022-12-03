@@ -17,31 +17,29 @@ const People = () => {
             <Accordion.Item eventKey="0">
                 <Accordion.Header><strong>People you follow</strong></Accordion.Header>
                 <Accordion.Body>
-                    <div>List of Following</div>
-                    <div className="list-group">
-                        {
-                            following && following.map((follow) =>
-                                <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
-                                    {follow.followed.username}
+                    {following &&
+                        <div className="list-group">
+                            {following.map((follow) =>
+                                <Link to={`/public-profile/${follow.followed._id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>{follow.followed.username}</div>
                                 </Link>
-                            )
-                        }
-                    </div>
+                            )}
+                        </div>
+                    }
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
                 <Accordion.Header><strong>People following you</strong></Accordion.Header>
                 <Accordion.Body>
-                    <div>List of Following</div>
-                    <div className="list-group">
-                        {
-                            followers && followers.map((follow) =>
-                                <Link to={`/profile/${follow.follower._id}`} className="list-group-item">
+                    {followers &&
+                        <div className="list-group">
+                            {followers.map((follow) =>
+                                <Link to={`/public-profile/${follow.follower._id}`} className="list-group-item">
                                     {follow.follower.username}
                                 </Link>
-                            )
-                        }
-                    </div>
+                            )}
+                        </div>
+                    }
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>

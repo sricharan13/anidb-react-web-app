@@ -22,14 +22,11 @@ const DetailsComponent = () => {
         dispatch(findByAnimeIdThunk(animeId))
         dispatch(findReviewsByAnimeThunk(animeId))
     // }, [reviews])
-    }, [])
+    }, [JSON.stringify(reviews)])
     const handleReview = () => {
         dispatch(createReviewThunk(
-            {
-                review,
-                animeId
-            }
-        ))
+            {review, animeId})
+        )
     }
     const handleRating = () => {
 
@@ -55,7 +52,7 @@ const DetailsComponent = () => {
                                     <input type="range" name="rating" value={rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
                                     <span className="ms-1"><strong>{rating}</strong></span>
                                 </div>
-                                <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleReview}>
+                                <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={handleRating}>
                                     Rate Anime
                                 </button>
                             </div>
@@ -133,7 +130,7 @@ const DetailsComponent = () => {
                                     reviews.map((r) =>
                                         <li className="list-group-item">
                                             <div className="fw-bold">
-                                                <Link to={`/profile/${r.author._id}`} className="text-decoration-none">
+                                                <Link to={`/public-profile/${r.author._id}`} className="text-decoration-none">
                                                     {r.author.username}
                                                 </Link>
                                             </div>

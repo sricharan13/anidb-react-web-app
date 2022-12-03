@@ -19,3 +19,8 @@ export const findFollowing = async (follower) => {
     return response.data
 }
 
+export const findIfFollowing = async (followed) => {
+    const response = await api.get(`${FOLLOWS_API}/${followed}/if-following`)
+    return response.data
+}
+
