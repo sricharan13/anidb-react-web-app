@@ -90,11 +90,13 @@ const HomeComponent = () => {
                 <div className="mt-2">
                     <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                         {trending.map((t) => (
-                            <div style={{width: "10rem"}} className="text-center">
+                            <Link to={`/anime/${t.id}`} className="text-decoration-none text-dark">
+                                <div style={{width: "10rem"}} className="text-center">
                                     <img src={`${t.image}`} height={200} width={128} className="rounded"/>
                                     <div>{t.title.english ? t.title.english: t.title.romaji}</div>
                                     <div>{t.rating} | {t.type}</div>
-                            </div>
+                                </div>
+                            </Link>
                         ))}
                     </Carousel>
                 </div>
@@ -128,13 +130,15 @@ const HomeComponent = () => {
                         <div className="mt-2">
                             <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                                 {byGenre.map((a) => (
-                                    <div style={{width: "10rem"}} >
-                                        <div className={"text-center"}>
-                                            <img src={`${a.image}`} height={200} width={128} className="rounded"/>
-                                            <div>{a.title.english ? a.title.english: a.title.romaji}</div>
-                                            <div>{a.rating} | {a.type}</div>
+                                    <Link to={`/anime/${a.id}`} className="text-decoration-none text-dark">
+                                        <div style={{width: "10rem"}} >
+                                            <div className={"text-center"}>
+                                                <img src={`${a.image}`} height={200} width={128} className="rounded"/>
+                                                <div>{a.title.english ? a.title.english: a.title.romaji}</div>
+                                                <div>{a.rating} | {a.type}</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </Carousel>
                         </div>

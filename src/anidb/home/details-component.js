@@ -41,7 +41,7 @@ const DetailsComponent = () => {
             dispatch(findRatingForAnimeThunk(animeId))
             setRating(animeRating.length === 1 ? animeRating[0].rating : 50)
         }
-    }, [isFav, JSON.stringify(reviews), JSON.stringify(animeRating)])
+    }, [animeId, isFav, JSON.stringify(reviews), JSON.stringify(animeRating)])
     const handleReview = () => {
         dispatch(createReviewThunk(
             {
@@ -161,13 +161,15 @@ const DetailsComponent = () => {
                                 <Accordion.Body>
                                     <Carousel responsive={responsive} autoPlay={true} infinite={true}>{
                                         details.recommendations.map((recommendation) => (
-                                            <div style={{width: "10rem"}} >
-                                                <div className={"text-center"}>
-                                                    <img src={`${recommendation.image}`} height={200} width={128}/>
-                                                    <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
-                                                    <div>Rating: {recommendation.rating}</div>
+                                            <Link to={`/anime/${recommendation.id}`} className="text-decoration-none text-dark">
+                                                <div style={{width: "10rem"}} >
+                                                    <div className={"text-center"}>
+                                                        <img src={`${recommendation.image}`} height={200} width={128}/>
+                                                        <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
+                                                        <div>Rating: {recommendation.rating}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         ))}
                                     </Carousel>
                                 </Accordion.Body>
