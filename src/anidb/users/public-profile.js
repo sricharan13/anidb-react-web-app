@@ -1,12 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-import {findFollowersThunk, findFollowingThunk, findIfFollowingThunk, followUserThunk} from "../follows/follows-thunks";
+import {findFollowersThunk, findFollowingThunk, findIfFollowingThunk, followUserThunk, unFollowUserThunk} from "../follows/follows-thunks";
 import {useEffect} from "react";
 import {findUserByIdThunk} from "./users-thunk";
 import {findReviewsByAuthorThunk} from "../reviews/reviews-thunks";
 import {Link} from "react-router-dom";
 import {Accordion} from "react-bootstrap";
-import currentUser from "./current-user";
 
 const PublicProfile = () => {
     const {uid} = useParams()
@@ -14,8 +13,6 @@ const PublicProfile = () => {
     const {currentUser} = useSelector((state) => state.users)
     const {reviews} = useSelector((state) => state.reviews)
     const {followers, following} = useSelector((state) => state.follows)
-    console.log('followers', followers)
-    console.log('following', following)
     const {ifFollowing} = useSelector((state) => state.follows)
     const dispatch = useDispatch()
     const handleFollowBtn = () => {
@@ -24,9 +21,9 @@ const PublicProfile = () => {
         }))
     }
     const handleUnFollowBtn = () => {
-        // dispatch(UnfollowUserThunk({
-        //     followed: uid
-        // }))
+        dispatch(unFollowUserThunk({
+            unFollowed: uid
+        }))
     }
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
@@ -34,7 +31,7 @@ const PublicProfile = () => {
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
         dispatch(findIfFollowingThunk(uid))
-    }, [uid])
+    }, [ifFollowing])
     return(
         <>
             <h3 className="text-center">Public Profile</h3>
@@ -89,7 +86,6 @@ const PublicProfile = () => {
                         <Accordion.Item eventKey="2">
                             <Accordion.Header><strong>Followers</strong></Accordion.Header>
                             <Accordion.Body>
-                                <pre>{JSON.stringify(followers)}</pre>
                                 {followers &&
                                     <div className="list-group">
                                         {followers.map((follow) =>
