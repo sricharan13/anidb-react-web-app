@@ -191,7 +191,7 @@ const DetailsComponent = () => {
                                         reviews.map((r) =>
                                                         <li className="list-group-item">
                                                             <div className="fw-bold">
-                                                                <Link to={`/profile/${r.author._id}`} className="text-decoration-none">
+                                                                <Link to={`/public-profile/${r.author._id}`} className="text-decoration-none">
                                                                     {r.author.username}
                                                                 </Link>
                                                             </div>

@@ -17,7 +17,7 @@ export const addToFavorites = async (favorite) => {
 
 export const removeFromFavorites = async (animeId) => {
     const response = await api.delete(`${FAVS_API}/${animeId}`)
-    console.log(response)
+    // console.log(response)
     return response.data
 }
 

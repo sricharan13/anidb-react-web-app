@@ -3,6 +3,12 @@ import axios from "axios";
 const BASE_API_URL = 'http://localhost:4000'
 const USER_API_URL = 'http://localhost:4000/users'
 
+export const findUserById = async (uid) => {
+    const response = await api.get(`${USER_API_URL}/${uid}`)
+    const user = response.data
+    return user
+}
+
 const api = axios.create({withCredentials: true});
 
 export const register = async (user) => {
@@ -31,6 +37,11 @@ export const findAllUsers = async () => {
 
 export const findUsersList = async () => {
     const response = await api.get(USER_API_URL)
+    return response.data
+}
+
+export const updateCurrentUser = async (user) => {
+    const response = await api.put(USER_API_URL, user)
     return response.data
 }
 

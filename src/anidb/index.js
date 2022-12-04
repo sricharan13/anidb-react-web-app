@@ -59,7 +59,7 @@ function Anidb() {
                                     <Route path="people" element={<People/>}/>
                                     <Route path="my-activity" element={<MyActivity/>}/>
                                 </Route>
-                                <Route path="/profile/:uid" element={<PublicProfile/>}/>
+                                <Route path="/public-profile/:uid" element={<PublicProfile/>}/>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
                             </Routes>
                         </div>
