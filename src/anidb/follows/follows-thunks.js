@@ -1,14 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {findFollowing, findFollowers, followUser, findIfFollowing} from "./follows-service";
+import {findFollowing, findFollowers, followUser, findIfFollowing, unFollowUser} from "./follows-service";
 
 export const followUserThunk = createAsyncThunk(
     'followUser',
     async (follow) => await followUser(follow)
 )
 
+export const unFollowUserThunk = createAsyncThunk(
+    'unFollowUser',
+    async (unFollow) => await unFollowUser(unFollow)
+)
+
 export const findFollowersThunk = createAsyncThunk(
     'findFollowers',
-    async (userId) => await findFollowers(userId)
+    async (followed) => await findFollowers(followed)
 )
 
 export const findFollowingThunk = createAsyncThunk(

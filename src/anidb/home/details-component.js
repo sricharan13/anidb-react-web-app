@@ -188,7 +188,7 @@ const DetailsComponent = () => {
                             <div className="mt-2">
                                 <ul className="list-group">
                                     {
-                                        reviews.map((r) =>
+                                        reviews && reviews.map((r) =>
                                                         <li className="list-group-item">
                                                             <div className="fw-bold">
                                                                 <Link to={`/public-profile/${r.author._id}`} className="text-decoration-none">
