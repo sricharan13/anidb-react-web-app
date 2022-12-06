@@ -16,7 +16,6 @@ const followsReducer = createSlice({
     },
     extraReducers: {
         [followUserThunk.fulfilled]: (state, {payload}) => {
-            // state.followers.push(payload)
             state.ifFollowing = true
         },
         [unFollowUserThunk.fulfilled]: (state, {payload}) => {

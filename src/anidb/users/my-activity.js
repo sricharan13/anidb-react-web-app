@@ -17,7 +17,6 @@ const MyActivity =() => {
     }, [])
     return(
         <>
-            <div>My Activity</div>
             <Accordion>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header><strong>My Reviews</strong></Accordion.Header>
@@ -27,8 +26,8 @@ const MyActivity =() => {
                                 reviews && reviews.map((review) =>
                                        <Link to={`/anime/${review.animeId}`} key={review.animeId} className="list-group-item">
                                            <div>
-                                               <span> {review.animeTitle} </span>
-                                               <span className="float-end"> {review.review} </span>
+                                               <span className="fw-bold"> {review.animeTitle} </span> <br/>
+                                               <span> {review.review} </span>
                                            </div>
                                        </Link>
                                 )

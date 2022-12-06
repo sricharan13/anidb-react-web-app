@@ -25,7 +25,7 @@ const Profile = () => {
                     <Link to="/profile/favourites" className={`nav-link ${parts[2] === 'favourites'?'active': ''}`}>Favourites</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/profile/my-reviews" className={`nav-link ${parts[2] === 'my-reviews'?'active': ''}`}>My Reviews</Link>
+                    <Link to="/profile/my-activity" className={`nav-link ${parts[2] === 'my-activity'?'active': ''}`}>My Activity</Link>
                 </li>
             </ul>
             <div className="mt-2">

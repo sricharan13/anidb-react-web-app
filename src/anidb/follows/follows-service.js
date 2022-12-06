@@ -1,12 +1,17 @@
 import axios from "axios";
+
 const FOLLOWS_API = 'http://localhost:4000/follows'
 
-const api = axios.create({withCredentials: true});
+const api = axios.create(
+    {
+        withCredentials: true
+    }
+);
 
 export const followUser = async (follow) => {
-    console.log('follow service, posting request')
+    // console.log('follow service, posting request')
     const response = await api.post(`${FOLLOWS_API}`, follow)
-    console.log('response received')
+    // console.log('response received')
     return response.data
 }
 

@@ -15,18 +15,17 @@ const Favourites = () => {
     }, [])
     return(
         <>
+            {/*<pre> {JSON.stringify(favorites)} </pre>*/}
             <ul className="list-group">
                 {
                     favorites && favorites.map((favorite) =>
-                                <Link to={`/anime/${favorite.animeId}`} className="text-decoration-none">
-                                    <li className="list-group-item d-flex rounded">
-                                        <div>
-                                            <img src={favorite.animeImg} alt="Unable to render" height={200} width={128} className="rounded"/>
-                                        </div>
-                                        <div className="fw-bold display-4 ms-2 mt-5">
-                                            {favorite.animeTitle}
-                                        </div>
-                                    </li>
+                                <Link to={`/anime/${favorite.animeId}`} className="text-decoration-none list-group-item d-flex align-items-center">
+                                    <div>
+                                        <img src={favorite.animeImg} alt="Unable to render" height={100} width={67} className="rounded"/>
+                                    </div>
+                                    <h2 className="ms-2">
+                                        {favorite.animeTitle}
+                                    </h2>
                                 </Link>
                               )
                 }
