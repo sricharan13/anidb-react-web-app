@@ -10,6 +10,8 @@ import {
     findTrendingAnimeThunk
 } from "./home-thunks";
 import {responsive} from "../responsive";
+import {findFavoritesByUserThunk} from "../favorites/favorites-thunks";
+import {Link} from "react-router-dom";
 
 
 const HomeComponent = () => {
@@ -18,12 +20,17 @@ const HomeComponent = () => {
                     "Sports", "Supernatural", "Thriller"]
     const {recentEp} = useSelector((state) => state.home)
     const {trending, byGenre} = useSelector((state) => state.home)
+    const {currentUser} = useSelector((state) => state.users)
+    const {favorites} = useSelector((state) => state.favorites)
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(findRecentAnimeEpisodesThunk())
         dispatch(findTrendingAnimeThunk())
         dispatch(findByAnimeGenreThunk("Action"))
+        if (currentUser) {
+            dispatch(findFavoritesByUserThunk(currentUser._id))
+        }
     }, [])
     const handleAnimeGenre= (data) => {
         dispatch(findByAnimeGenreThunk(data))
@@ -52,23 +59,51 @@ const HomeComponent = () => {
                     )}
                 </SingleCarousel>
             </div>
-            {/*Action Anime*/}
+            {/*Your Favorites*/}
+            {
+                currentUser &&
+                <div className="mt-2">
+                    <span className="display-6"> Your Favorites </span>
+                    <div className="mt-2">
+                        {/*<pre> {JSON.stringify(favorites)} </pre>*/}
+                        {
+                            favorites &&
+                            <Carousel responsive={responsive} autoPlay={true} infinite={true}>
+                                {
+                                    favorites.map((favorite) =>
+                                          <Link to={`/anime/${favorite.animeId}`} className="text-decoration-none text-dark">
+                                              <div style={{width: "10rem"}} className="text-center">
+                                                  <img src={`${favorite.animeImg}`} height={200} width={128} className="rounded"/>
+                                                  <div>{favorite.animeTitle}</div>
+                                              </div>
+                                          </Link>
+                                    )
+                                }
+                            </Carousel>
+                        }
+                    </div>
+                </div>
+            }
+            {/*Trending Anime*/}
             <div className="mt-2">
-                <strong> Trending Now </strong>
+                <span className="display-6"> Trending Now </span>
                 <div className="mt-2">
                     <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                         {trending.map((t) => (
-                            <div style={{width: "10rem"}} className="text-center">
-                                    <img src={`${t.image}`} height={200} width={128}/>
+                            <Link to={`/anime/${t.id}`} className="text-decoration-none text-dark">
+                                <div style={{width: "10rem"}} className="text-center">
+                                    <img src={`${t.image}`} height={200} width={128} className="rounded"/>
                                     <div>{t.title.english ? t.title.english: t.title.romaji}</div>
                                     <div>{t.rating} | {t.type}</div>
-                            </div>
+                                </div>
+                            </Link>
                         ))}
                     </Carousel>
                 </div>
             </div>
+
             {/*Anime By Genre*/}
-            <div>
+            <div className="mt-2">
                 <div>
                     <span className="display-6"> Anime By Genre </span>
                     <div className="dropdown float-end">
@@ -95,13 +130,15 @@ const HomeComponent = () => {
                         <div className="mt-2">
                             <Carousel responsive={responsive} autoPlay={true} infinite={true}>
                                 {byGenre.map((a) => (
-                                    <div style={{width: "10rem"}} >
-                                        <div className={"text-center"}>
-                                            <img src={`${a.image}`} height={200} width={128} className="rounded"/>
-                                            <div>{a.title.english ? a.title.english: a.title.romaji}</div>
-                                            <div>{a.rating} | {a.type}</div>
+                                    <Link to={`/anime/${a.id}`} className="text-decoration-none text-dark">
+                                        <div style={{width: "10rem"}} >
+                                            <div className={"text-center"}>
+                                                <img src={`${a.image}`} height={200} width={128} className="rounded"/>
+                                                <div>{a.title.english ? a.title.english: a.title.romaji}</div>
+                                                <div>{a.rating} | {a.type}</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </Carousel>
                         </div>
