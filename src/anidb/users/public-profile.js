@@ -1,17 +1,21 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {findFollowersThunk, findFollowingThunk, findIfFollowingThunk, followUserThunk, unFollowUserThunk} from "../follows/follows-thunks";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {findUserByIdThunk} from "./users-thunk";
 import {findReviewsByAuthorThunk} from "../reviews/reviews-thunks";
 import {Link} from "react-router-dom";
 import {Accordion} from "react-bootstrap";
+import {findRatingsByUserThunk} from "../ratings/ratings-thunks";
+import {findFavoritesByUserThunk} from "../favorites/favorites-thunks";
 
 const PublicProfile = () => {
     const {uid} = useParams()
     const {publicProfile} = useSelector((state) => state.users)
     const {currentUser} = useSelector((state) => state.users)
     const {reviews} = useSelector((state) => state.reviews)
+    const {userRatings} = useSelector((state) => state.ratings)
+    const {favorites} = useSelector((state) => state.favorites)
     const {followers, following} = useSelector((state) => state.follows)
     const {ifFollowing} = useSelector((state) => state.follows)
     const dispatch = useDispatch()
@@ -28,10 +32,12 @@ const PublicProfile = () => {
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
         dispatch(findReviewsByAuthorThunk(uid))
+        dispatch(findRatingsByUserThunk(uid))
+        dispatch(findFavoritesByUserThunk(uid))
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
         dispatch(findIfFollowingThunk(uid))
-    }, [ifFollowing])
+    }, [uid, ifFollowing])
     return(
         <>
             <h3 className="text-center">Public Profile</h3>
@@ -62,7 +68,10 @@ const PublicProfile = () => {
                                     <div className="list-group">
                                         {reviews.map((review) =>
                                             <Link to={`/anime/${review.animeId}`} className="list-group-item d-flex justify-content-between align-items-center">
-                                                <div>{review.review}</div>
+                                                <div>
+                                                    <span className="fw-bold"> {review.animeTitle} </span><br/>
+                                                    <span className="float-end"> {review.review} </span>
+                                                </div>
                                             </Link>
                                         )}
                                     </div>
@@ -70,6 +79,47 @@ const PublicProfile = () => {
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
+                            <Accordion.Header><strong>Ratings</strong></Accordion.Header>
+                            <Accordion.Body>
+                                <div className="list-group">
+                                    {
+                                        userRatings && userRatings.map((rating) =>
+                                           <Link to={`/anime/${rating.animeId}`} className="list-group-item">
+                                               <div>
+                                                   <span> {rating.animeTitle} </span>
+                                                   <span className="float-end"> {rating.rating} </span>
+                                               </div>
+                                           </Link>
+                                        )
+                                    }
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header><strong>Favorites</strong></Accordion.Header>
+                            <Accordion.Body>
+                                <div className="mt-2">
+                                    {
+                                        favorites &&
+                                        <div className="list-group">
+                                            {
+                                                favorites.map((favorite) =>
+                                                  <Link to={`/anime/${favorite.animeId}`} className="text-decoration-none text-dark list-group-item d-flex align-items-center">
+                                                      <div>
+                                                          <img src={favorite.animeImg} alt="Unable to render" height={100} width={67} className="rounded"/>
+                                                      </div>
+                                                      <h2 className="ms-2">
+                                                          {favorite.animeTitle}
+                                                      </h2>
+                                                  </Link>
+                                                )
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="3">
                             <Accordion.Header><strong>Following</strong></Accordion.Header>
                             <Accordion.Body>
                                 {following &&
@@ -83,7 +133,7 @@ const PublicProfile = () => {
                                 }
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="2">
+                        <Accordion.Item eventKey="4">
                             <Accordion.Header><strong>Followers</strong></Accordion.Header>
                             <Accordion.Body>
                                 {followers &&

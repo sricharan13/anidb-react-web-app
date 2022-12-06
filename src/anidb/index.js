@@ -17,11 +17,13 @@ import homeReducer from "./reducers/home-reducer";
 import Account from "./users/account";
 import Favourites from "./users/favourites";
 import People from "./users/people";
-import MyReviews from "./users/my-reviews";
+import MyActivity from "./users/my-activity";
 import UserList from "./users";
 import ProtectedRoute from "./users/protected-route";
+import favoritesReducer from "./favorites/favorites-reducer";
 import PublicProfile from "./users/public-profile";
 import followsReducer from "./follows/follows-reducer";
+import ratingsReducer from "./ratings/ratings-reducer";
 
 const store = configureStore({
                                  reducer: {
@@ -29,9 +31,11 @@ const store = configureStore({
                                      anisearch: searchReducer,
                                      reviews: reviewsReducer,
                                      home: homeReducer,
-                                     follows: followsReducer
+                                     favorites: favoritesReducer,
+                                     follows: followsReducer,
+                                     ratings: ratingsReducer
                                  }
-})
+                             })
 
 function Anidb() {
     return(
@@ -53,7 +57,7 @@ function Anidb() {
                                     <Route path="account" element={<Account/>}/>
                                     <Route path="favourites" element={<Favourites/>}/>
                                     <Route path="people" element={<People/>}/>
-                                    <Route path="my-reviews" element={<MyReviews/>}/>
+                                    <Route path="my-activity" element={<MyActivity/>}/>
                                 </Route>
                                 <Route path="/public-profile/:uid" element={<PublicProfile/>}/>
                                 <Route path="/anime/:animeId" element={<DetailsComponent/>}/>
