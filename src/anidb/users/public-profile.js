@@ -8,8 +8,6 @@ import {Link} from "react-router-dom";
 import {Accordion} from "react-bootstrap";
 import {findRatingsByUserThunk} from "../ratings/ratings-thunks";
 import {findFavoritesByUserThunk} from "../favorites/favorites-thunks";
-import Carousel from "react-multi-carousel";
-import {responsive} from "../responsive";
 
 const PublicProfile = () => {
     const {uid} = useParams()
