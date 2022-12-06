@@ -47,13 +47,13 @@ const PublicProfile = () => {
                         <div>
                             <h5>{publicProfile.username} &middot; {publicProfile.firstName} {publicProfile.lastName}</h5>
                         </div>
-                        {currentUser && publicProfile._id !== currentUser._id && ifFollowing && <button
+                        {currentUser && currentUser.accountType === "OTAKU" && publicProfile._id !== currentUser._id && ifFollowing && <button
                             onClick={handleUnFollowBtn}
                             className="btn btn-outline-danger btn-sm rounded-pill">
                             Unfollow
                         </button>
                         }
-                        {currentUser && publicProfile._id !== currentUser._id && !ifFollowing && <button
+                        {currentUser && currentUser.accountType === "OTAKU" && publicProfile._id !== currentUser._id && !ifFollowing && <button
                             onClick={handleFollowBtn}
                             className="btn btn-primary btn-sm rounded-pill">
                             Follow

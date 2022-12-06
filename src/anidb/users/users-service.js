@@ -3,13 +3,13 @@ import axios from "axios";
 const BASE_API_URL = 'http://localhost:4000'
 const USER_API_URL = 'http://localhost:4000/users'
 
+const api = axios.create({withCredentials: true});
+
 export const findUserById = async (uid) => {
     const response = await api.get(`${USER_API_URL}/${uid}`)
     const user = response.data
     return user
 }
-
-const api = axios.create({withCredentials: true});
 
 export const register = async (user) => {
     const response = await api.post(`${BASE_API_URL}/register`, user)
@@ -49,6 +49,7 @@ export const createUser = () => {
 
 }
 
-const deleteUser = () => {
-
+export const deleteUser = async (user) => {
+    const response = await api.delete(`${USER_API_URL}/${user.uid}`)
+    return response.data
 }

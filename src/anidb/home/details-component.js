@@ -85,11 +85,11 @@ const DetailsComponent = () => {
             {
                 details &&
                 <div>
-                    <div className="border-dark border-bottom">
+                    <div>
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="display-5 fw-bold"> {details.title.english ? details.title.english: details.title.romaji} </span>
                             {
-                                currentUser &&
+                                currentUser && currentUser.accountType === "OTAKU" &&
                                 <div className="text-center">
                                     <div className="d-flex">
                                         <input type="range" name="rating" value={rating} className="form-range" min="0" max="100" step="1" onChange={(e) => setRating(e.target.valueAsNumber)}/>
@@ -118,12 +118,12 @@ const DetailsComponent = () => {
                             <div className="col-4 mb-2">
                                 <img src={`${details.image}`} alt="Unable to render" width={200} height={275} className="rounded float-end me-2"/>
                                 {
-                                    currentUser && !isFav &&
+                                    currentUser && currentUser.accountType === "OTAKU" && !isFav &&
                                     <button type="button" className="btn btn-primary rounded-pill mt-2 float-end me-4"
                                             onClick={handleAddFavorite}>Add to Favorites</button>
                                 }
                                 {
-                                    currentUser && isFav &&
+                                    currentUser && currentUser.accountType === "OTAKU" && isFav &&
                                     <button type="button" className="btn btn-outline-danger rounded-pill mt-2 float-end me-2"
                                             onClick={handleRemoveFavorite}>Remove from Favorites</button>
                                 }
@@ -177,7 +177,7 @@ const DetailsComponent = () => {
                         </Accordion>
                         <div className="mt-2">
                             <span className="display-6 border-light border-bottom"> Reviews </span>
-                            <div>{currentUser &&
+                            <div>{currentUser && currentUser.accountType === "OTAKU" &&
                                   <div className="form-group mt-2 row">
                                     <textarea className="col-12" rows="3" placeholder="Post your review here..."
                                               onChange={(e) => setReview(e.target.value)}></textarea>

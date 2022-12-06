@@ -1,26 +1,20 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findAllUsersThunk, findUsersListThunk} from "./users-thunk";
+import {findAllUsersThunk, deleteUserThunk} from "./users-thunk";
 import {Link} from "react-router-dom";
-import {findFollowersThunk, findFollowingThunk, followUserThunk} from "../follows/follows-thunks";
 
 const UserList = () => {
     const {users} = useSelector((state) => state.users)
     const {currentUser} = useSelector((state) => state.users)
-    const {followers, following} = useSelector((state) => state.follows)
     const dispatch = useDispatch()
-    const handleFollowBtn = (followedId) => {
-        dispatch(followUserThunk({
-            followed: followedId
+    const handleDeleteBtn = (uid) => {
+        dispatch(deleteUserThunk({
+            uid: uid
         }))
     }
     useEffect(() => {
         dispatch(findAllUsersThunk())
-        if (currentUser) {
-            dispatch(findFollowersThunk(currentUser._id))
-            dispatch(findFollowingThunk(currentUser._id))
-        }
-    }, [])
+    }, [JSON.stringify(users)])
     return(
         <>
             <h3 className="text-center">Users</h3>
@@ -32,16 +26,8 @@ const UserList = () => {
                                 <Link to={`/public-profile/${user._id}`} className="text-decoration-none">
                                     {user.username}
                                 </Link>
-                                {/*{currentUser && currentUser.accountType === 'OTAKU' &&*/}
-                                {/*    <button className="btn btn-sm btn-primary rounded-pill"*/}
-                                {/*            onClick={() => handleFollowBtn(user._id)}>Follow</button>*/}
-                                {/*}*/}
-                                {/*{*/}
-                                {/*    following.find(element => element.followed._id === user._id)  &&*/}
-                                {/*    <button className="btn btn-sm btn-danger rounded-pill" onClick={() => handleFollowBtn(user._id)}>Unfollow</button>*/}
-                                {/*}*/}
                                 {currentUser && currentUser.accountType === 'ADMIN' &&
-                                    <button className="btn btn-sm btn-danger rounded-pill">Delete</button>
+                                    <button className="btn btn-sm btn-danger rounded-pill" onClick={() => handleDeleteBtn(user._id)}>Delete</button>
                                 }
                             </li>
                         }
