@@ -5,7 +5,7 @@ import {logoutThunk, updateCurrentUserThunk} from "./users-thunk";
 
 const Account = () => {
     const {currentUser} = useSelector((state) => state.users)
-    const [currentUserState, setCurrentUserState] = React.useState({currentUser})
+    const [currentUserState, setCurrentUserState] = React.useState()
     const dispatch = useDispatch()
     const updateCurrentUserData = (event) => {
         setCurrentUserState({
@@ -19,6 +19,7 @@ const Account = () => {
     const updateCurrentUser = () => {
         dispatch(updateCurrentUserThunk(currentUserState))
     }
+    useEffect(() => {setCurrentUserState(currentUser)}, [JSON.stringify(currentUser)])
     return(
         <>
             {currentUser && (
