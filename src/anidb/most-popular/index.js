@@ -17,7 +17,7 @@ const MostPopularComponent = () => {
                     <span className="fw-bold text-dark">All-Time Popular</span>
                 </li>
                 {
-                    mostPopular && mostPopular.filter((item, index) => index < 6).map((m) =>
+                    mostPopular && mostPopular.filter((item, index) => index < 5).map((m) =>
                            <Link to={`/anime/${m.id}`} className="text-decoration-none">
                                <li className="list-group-item d-flex">
                                    <div>
