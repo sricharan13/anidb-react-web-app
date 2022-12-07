@@ -32,7 +32,7 @@ const Login = () => {
             }
             <div className="text-center">
                 <input className="form-control mb-2 rounded-pill" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)}/>
-                <input className="form-control mb-2 rounded-pill" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" className="form-control mb-2 rounded-pill" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
                 <button onClick={handleLoginBtn} className="btn btn-primary rounded-pill">Login</button>
                 <div className="mt-2">
                     <span>Don't have an account? </span>

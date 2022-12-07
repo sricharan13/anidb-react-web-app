@@ -8,7 +8,6 @@ import Login from "./users/login";
 import CurrentUser from "./users/current-user";
 import Profile from "./users/profile";
 import Register from "./users/register";
-import RecommendedLists from "./recommended-lists";
 import searchReducer from "./home/search-reducer";
 import SearchComponent from "./home/search";
 import DetailsComponent from "./home/details-component";
@@ -24,6 +23,12 @@ import favoritesReducer from "./favorites/favorites-reducer";
 import PublicProfile from "./users/public-profile";
 import followsReducer from "./follows/follows-reducer";
 import ratingsReducer from "./ratings/ratings-reducer";
+// import TopAiringComponent from "./top-airing";
+import MostPopularComponent from "./most-popular";
+import MostAnticipatedComponent from "./most-anticipated";
+// import topAiringReducer from "./top-airing/top-airing-reducer";
+import mostAnticipatedReducer from "./most-anticipated/most-anticipated-reducer";
+import mostPopularReducer from "./most-popular/most-popular-reducer";
 
 const store = configureStore({
                                  reducer: {
@@ -33,7 +38,10 @@ const store = configureStore({
                                      home: homeReducer,
                                      favorites: favoritesReducer,
                                      follows: followsReducer,
-                                     ratings: ratingsReducer
+                                     ratings: ratingsReducer,
+                                     // topairing: topAiringReducer,
+                                     mostanticipated: mostAnticipatedReducer,
+                                     mostpopular: mostPopularReducer
                                  }
                              })
 
@@ -64,7 +72,9 @@ function Anidb() {
                             </Routes>
                         </div>
                         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
-                            <RecommendedLists/>
+                            {/*<TopAiringComponent/>*/}
+                            <MostPopularComponent/>
+                            <MostAnticipatedComponent/>
                         </div>
                     </div>
                 </CurrentUser>

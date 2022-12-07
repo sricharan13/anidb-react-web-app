@@ -147,7 +147,7 @@ const DetailsComponent = () => {
                                         details.characters.map((character) => (
                                             <div style={{width: "10rem"}} >
                                                 <div className={"text-center"}>
-                                                    <img src={`${character.image}`} height={200} width={128}/>
+                                                    <img src={`${character.image}`} height={200} width={128} className="rounded"/>
                                                     <div>{character.name.full}</div>
                                                     <div>({character.role})</div>
                                                 </div>
@@ -164,7 +164,7 @@ const DetailsComponent = () => {
                                             <Link to={`/anime/${recommendation.id}`} className="text-decoration-none text-dark">
                                                 <div style={{width: "10rem"}} >
                                                     <div className={"text-center"}>
-                                                        <img src={`${recommendation.image}`} height={200} width={128}/>
+                                                        <img src={`${recommendation.image}`} height={200} width={128} className="rounded"/>
                                                         <div>{recommendation.title.english ? recommendation.title.english: recommendation.title.romaji}</div>
                                                         <div>Rating: {recommendation.rating}</div>
                                                     </div>
