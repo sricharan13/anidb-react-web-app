@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 
 const MostAnticipatedComponent = () => {
     const {mostAnticipated} = useSelector((state) => state.mostanticipated)
-    console.log(mostAnticipated)
     const dispatch = useDispatch()
     useEffect( () => {
         dispatch(findMostAnticipatedAnimeThunk())
