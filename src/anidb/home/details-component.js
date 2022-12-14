@@ -21,6 +21,7 @@ import {
 
 const DetailsComponent = () => {
     const {animeId} = useParams()
+    const {reviewId} = useParams()
     const {details} = useSelector((state) => state.anisearch)
     const {currentUser} = useSelector((state) => state.users)
     const {reviews} = useSelector((state) => state.reviews)
@@ -41,7 +42,7 @@ const DetailsComponent = () => {
             // console.log("dispatching")
             dispatch(isFavoriteThunk(animeId))
             dispatch(findRatingForAnimeThunk(animeId))
-            dispatch(deleteReviewThunk(review))
+            dispatch(deleteReviewThunk(reviewId))
             setRating(animeRating.length === 1 ? animeRating[0].rating : 50)
         }
     }, [])
@@ -84,7 +85,7 @@ const DetailsComponent = () => {
     const handleDeleteReview = () => {
         dispatch(deleteReviewThunk(
             {
-                review: review.rid
+                reviewId: reviews.rid
             }
         ))
     }
@@ -212,7 +213,7 @@ const DetailsComponent = () => {
                                                 </div>
 
                                                 {currentUser && currentUser.accountType === 'MOD' &&
-                                                    <button className="float-end btn btn-sm btn-danger rounded-pill" onClick={() => handleDeleteReview(review.rid)}>Delete</button>
+                                                    <button className="float-end btn btn-sm btn-danger rounded-pill" onClick={handleDeleteReview}>Delete</button>
                                                 }
                                             </li>
                                         )

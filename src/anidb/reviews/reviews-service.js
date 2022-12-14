@@ -15,8 +15,10 @@ export const createReview = async (review) => {
     return response.data
 }
 
-export const deleteReview = async (rid) => {
-    const response = await api.delete(`${REVIEWS_API}/${rid}`)
+export const deleteReview = async (review) => {
+    const singleReview = review.rid
+    const ridString = JSON.stringify(singleReview)
+    const response = await api.delete(`${REVIEWS_API}/${ridString}`)
     return response.data
 }
 
