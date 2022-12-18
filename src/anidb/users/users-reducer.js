@@ -9,6 +9,7 @@ import {
     registerThunk, updateCurrentUserThunk
 } from "./users-thunk";
 import {updateCurrentUser} from "./users-service";
+import {throwError} from "react-multi-carousel/lib/utils";
 
 const usersReducer = createSlice({
     name: 'users',
@@ -16,6 +17,8 @@ const usersReducer = createSlice({
         users: [],
         loading: false,
         currentUser: null,
+        loginError: false,
+        registerError: false,
         publicProfile: null
     },
     extraReducers: {
@@ -30,9 +33,17 @@ const usersReducer = createSlice({
         },
         [registerThunk.fulfilled]: (state, action) => {
             state.currentUser = action.payload
+            state.registerError = false
+        },
+        [registerThunk.rejected]: (state, action) => {
+            state.registerError = true
         },
         [loginThunk.fulfilled]: (state, action) => {
             state.currentUser = action.payload
+            state.loginError = false
+        },
+        [loginThunk.rejected]: (state, action) => {
+            state.loginError = true
         },
         [findAllUsersThunk.fulfilled]: (state, action) => {
             state.users = action.payload

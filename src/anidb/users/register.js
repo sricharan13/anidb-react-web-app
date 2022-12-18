@@ -13,10 +13,20 @@ const Register = () => {
     const [accountType, setAccountType] = useState('OTAKU')
     const [error, setError] = useState(null)
     const {currentUser} = useSelector((state) => state.users)
+    const {registerError} = useSelector((state) => state.users)
     const dispatch = useDispatch()
+    const isEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
     const handleRegisterBtn = () => {
+        if (username === '' || password === '' || validatePassword === '' || firstName === '' || lastName === '' || email === '') {
+            setError('Empty Fields')
+            return
+        }
+        if (!isEmail(email)) {
+            setError('Invalid Email')
+            return
+        }
         if (password !== validatePassword) {
-            setError('Passwords must match')
+            setError('Password Mismatch')
             return
         }
         setError(null)
@@ -29,10 +39,14 @@ const Register = () => {
     return(
         <>
             <h3 className="text-center">Register</h3>
-            {
-                error &&
+            {error &&
                 <div className="alert alert-danger">
                     {error}
+                </div>
+            }
+            {registerError &&
+                <div className="alert alert-danger">
+                    Username unavailable
                 </div>
             }
             <div className="text-center">
@@ -61,8 +75,8 @@ const Register = () => {
                     placeholder="Re-Enter Password"
                     onChange={(e) => setValidatePassword(e.target.value)}/>
                 <select className="form-control mb-2 rounded-pill" onChange={(e) => setAccountType(e.target.value)}>
-                    <option value="" disabled={true} selected={true} hidden={true}>Account Type</option>
-                    <option value="OTAKU">Otaku</option>
+                    <option value="" disabled={true} hidden={true}>Account Type</option>
+                    <option value="OTAKU" selected={true}>Otaku</option>
                     <option value="ADMIN">Admin</option>
                 </select>
                 <button
